@@ -20,7 +20,7 @@ Now control money easy
 3.2.1.1. <a href="#3211-Удобства-использования">Удобства использования</a></br>
 3.2.1.2. <a href="#3212-Надежность">Надежность</a></br>
 3.2.1.3. <a href="#3213-Функциональность">Функциональность</a></br>
-4 <a>UML диаграммы</a></br>
+4. <a>UML диаграммы</a></br>
 4.1 <a href="https://github.com/Nikita199909/My-Money/blob/master/Documentation/UseCase.md">Диаграмма вариантов использования</a></br>
 4.2 <a href="https://github.com/Nikita199909/My-Money/blob/master/Documentation/Activities.md">Диаграмма активности</a></br>
 4.3 <a href="https://github.com/Nikita199909/My-Money/blob/master/Documentation/Sequence.md">Диаграмма последовательности</a></br>
