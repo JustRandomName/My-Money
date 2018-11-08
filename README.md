@@ -41,13 +41,13 @@ Now control money easy
 
 ![alt-текст][MainView]
 
-[MainView]: https://github.com/Nikita199909/My-Money/tree/master/Mobile/mockups/MainView.png
+[MainView]: https://github.com/Nikita199909/My-Money/blob/master/Mobile/mockups/MainView.png
 
 При нажати на клавишу карта, открывается меню расходов по карточке:
 
 ![alt-текст][Card]
 
-[Card]: https://github.com/Nikita199909/My-Money/tree/master/Mobile/mockups/Card.png
+[Card]: https://github.com/Nikita199909/My-Money/blob/master/Mobile/mockups/Card.png
 
 Из - за невозможности узнать что было оплаченно картой, будут выведены места где тратились деньги по карте.
 
@@ -55,7 +55,7 @@ Now control money easy
 
 ![alt-текст][Cash]
 
-[Cash]: https://github.com/Nikita199909/My-Money/tree/master/Mobile/mockups/Cash.png
+[Cash]: https://github.com/Nikita199909/My-Money/blob/master/Mobile/mockups/Cash.png
 
 В этом меню можно добовлять категории трат денег, видя на что конретно уходят деньги.
 
@@ -63,7 +63,7 @@ Now control money easy
 
 ![alt-текст][Adding]
 
-[Adding]: https://github.com/Nikita199909/My-Money/tree/master/Mobile/mockups/Adding.png
+[Adding]: https://github.com/Nikita199909/My-Money/blob/master/Mobile/mockups/Adding.png
 
 ## 2.3 Характеристики пользователей
 ### 2.3.1 Целевая аудитория
