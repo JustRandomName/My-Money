@@ -5,7 +5,7 @@
 <a href="#4-просмотр-трат-по-карте">4 Просмотр трат по карте</a></br>
 <a href="#5-общая-диаграмма-последовательности">5 Общая диаграмма последовательности</a></br>
 # 1 Просмотр трат наличных
-![alt-текст](https://github.com/Nikita199909/My-Money/blob/master/Documentation/Diagrams/ActivitiCashWork.png "Cash")
+![alt-текст](https://github.com/Nikita199909/My-Money/blob/master/Documentation/Diagrams/TimegetInfo.png "Cash")
 # 2 Добавление категории
 ![alt-текст](https://github.com/Nikita199909/My-Money/blob/master/Documentation/Diagrams/TimeAdding.png "Cash 2")
 # 3 Удаление категории 
