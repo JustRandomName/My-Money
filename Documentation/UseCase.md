@@ -1,5 +1,5 @@
 # Варианты использования
-![alt-текст](https://github.com/Nikita199909/My-Money/blob/master/Documentation/Diagrams/UseCase.png "Use case")
+![alt-текст](https://github.com/Nikita199909/My-Money/blob/master/Documentation/Diagrams/UseCase/UseCase.png "Use case")
 # Содержание
 <a href="#1-актёры">1 Актеры</a></br>
 <a href="#2-варианты-использования">2 Варианты использования</a></br>
