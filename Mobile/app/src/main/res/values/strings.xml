@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MyMoney</string>
+    <string name="title_activity_start_activiti">StartActiviti</string>
+    <string name="card">Card</string>
+    <string name="cash">cash</string>
+    <string name="title_activity_card">Card</string>
+    <string name="title_activity_cash">Cash</string>
 </resources>

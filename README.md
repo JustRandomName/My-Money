@@ -24,6 +24,10 @@ Now control money easy
 4.1 <a href="https://github.com/Nikita199909/My-Money/blob/master/Documentation/UseCase.md">Диаграмма вариантов использования</a></br>
 4.2 <a href="https://github.com/Nikita199909/My-Money/blob/master/Documentation/Activities.md">Диаграмма активности</a></br>
 4.3 <a href="https://github.com/Nikita199909/My-Money/blob/master/Documentation/Sequence.md">Диаграмма последовательности</a></br>
+4.4 <a href="https://github.com/Nikita199909/My-Money/blob/master/Documentation/Classes.md">Диаграмма классов</a></br>
+4.5 <a href="https://github.com/Nikita199909/My-Money/blob/master/Documentation/State.md">Диаграмма состояний</a></br>
+4.6 <a href="https://github.com/Nikita199909/My-Money/blob/master/Documentation/Deployment.md">Диаграмма развёртывания</a></br>
+
 # 1. Введение
 Как часто вы сталкивались с тем, что деньги были потрачены, но куда - неизвестно? Или вы хотели бы знать на что вы тратите
 больше всего денег? Теперь это возможно! Данное приложение приложение призвано решить проблему ведения личного/семейного бюджета.
