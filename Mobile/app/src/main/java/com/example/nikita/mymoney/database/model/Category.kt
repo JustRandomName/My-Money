@@ -1,8 +1,10 @@
 package com.example.nikita.mymoney.database.model
 
-open class Category(_balance: Money) {
-    var balance: Money = _balance
-    fun addNew(name: String, balance: Money) {
+open class Category(_name: String) {
+
+    var _name: String = _name
+
+    fun addNew(name: String) {
 
     }
 

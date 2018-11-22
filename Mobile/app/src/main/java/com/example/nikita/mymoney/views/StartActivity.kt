@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_start_activiti.*
 import org.jetbrains.anko.activityUiThread
 import org.jetbrains.anko.doAsync
 
+
 class StartActivity : AppCompatActivity() {
 
     val Context.database: DBHelper

@@ -1,0 +1,72 @@
+package com.example.nikita.mymoney.smsParcer
+
+import android.app.Service
+import android.content.Intent
+import android.os.IBinder
+import java.util.regex.Pattern
+
+
+class SmsService : Service() {
+
+    var smsDTO: SmsDTO? = null
+
+    companion object {
+        val OPLATA = "(?<=(OPLATA)) \\d.\\d{2}"
+        val PLACE = "(?<=(BYN\\s))([\\w\\s-]*)?,"
+        val OSTATOK = "(?<=(BYN\\s))([\\w\\s-]*)(?=,)"
+    }
+
+    override fun onBind(intent: Intent): IBinder? {
+        return null
+    }
+
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        val smsBody = intent.extras!!.getString("sms_body")
+        parceSms(smsBody)
+        return Service.START_STICKY
+    }
+
+    private fun parceSms(smsBody: String) {
+        smsDTO!!.price = getOPLATA(smsBody)
+        smsDTO!!.place = getPLACE(smsBody)
+        smsDTO!!.remainder = getOSTATOK(smsBody)
+    }
+
+    private fun getOSTATOK(smsBody: String): String {
+        val pattern = Pattern.compile(OSTATOK)
+        val matcher = pattern.matcher(smsBody)
+        var result = ""
+        while (matcher.find()) {
+            result += matcher.group()
+        }
+        return result
+    }
+
+    private fun getPLACE(smsBody: String): String {
+        val pattern = Pattern.compile(PLACE)
+        val matcher = pattern.matcher(smsBody)
+        var result = ""
+        while (matcher.find()) {
+            result += matcher.group()
+        }
+        return result
+
+
+    }
+
+    private fun getOPLATA(smsBody: String): String {
+        val pattern = Pattern.compile(OPLATA)
+        val matcher = pattern.matcher(smsBody)
+        var result = ""
+        while (matcher.find()) {
+            result += matcher.group()
+        }
+        return result
+
+
+    }
+
+    private fun saveSmsData() {
+        // TODO : save sms to database
+    }
+}

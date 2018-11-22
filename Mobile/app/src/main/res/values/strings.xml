@@ -6,4 +6,6 @@
     <string name="title_activity_card">Card</string>
     <string name="title_activity_cash">Cash</string>
     <string name="start_btn">Start</string>
+    <string name="name">Name</string>
+    <string name="cost">Cost</string>
 </resources>
