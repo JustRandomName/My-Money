@@ -21,9 +21,13 @@ open class SimpleManager {
     val database: DBHelper
 
     fun add() {}
+
     fun delete() {}
+
     fun save() {}
+
     fun update() {}
+
     fun getCash() {}
 
     fun getBalance(): String {

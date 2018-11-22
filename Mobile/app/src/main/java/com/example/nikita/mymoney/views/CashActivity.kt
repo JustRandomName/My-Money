@@ -2,24 +2,23 @@ package com.example.nikita.mymoney.views
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity;
-import com.example.nikita.mymoney.R
-
-import kotlinx.android.synthetic.main.activity_cash.*
+import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
-import com.example.nikita.mymoney.database.manager.CashManager
+import com.example.nikita.mymoney.R
+import com.example.nikita.mymoney.database.manager.CashCategoryManager
+import kotlinx.android.synthetic.main.activity_cash.*
 
 
 class CashActivity : AppCompatActivity() {
 
-    lateinit var manager: CashManager
+    lateinit var manager: CashCategoryManager
     private var categoryName: String = ""
     private var categoryCost: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cash)
-        manager = CashManager(applicationContext)
+        manager = CashCategoryManager(applicationContext)
         setSupportActionBar(toolbar)
         add_button.setOnClickListener { showAddingCategoryName() }
     }
@@ -56,7 +55,7 @@ class CashActivity : AppCompatActivity() {
         alert.setPositiveButton("Ok") { _, _ ->
             // TODO : validate cost value
             categoryCost = cost.text.toString()
-            addNewCategory()
+            addNewCategory(categoryName, categoryCost)
         }
 
         alert.setNegativeButton("Cancel") { _, _ ->
@@ -65,8 +64,8 @@ class CashActivity : AppCompatActivity() {
         alert.show()
     }
 
-    private fun addNewCategory() {
-        // TODO : save in database (categoryCost, categoryName)
+    private fun addNewCategory(categoryName:String, categoryCost:String) {
+        manager.addNewCategory(categoryName, categoryCost)
     }
 
 }

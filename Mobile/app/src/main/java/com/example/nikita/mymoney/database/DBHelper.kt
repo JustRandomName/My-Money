@@ -10,7 +10,7 @@ import org.jetbrains.anko.db.*
 import kotlin.jvm.Synchronized
 import org.jetbrains.anko.db.ManagedSQLiteOpenHelper
 
-class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 4) {
+class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 5) {
     companion object {
         private var instance: DBHelper? = null
 
@@ -47,7 +47,7 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 4) 
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Here you can upgrade tables, as usual
-        if(oldVersion < 4) {
+        if(oldVersion < 5) {
             db.dropTable(Card.TABLENAME, true)
             db.dropTable(Cash.TABLENAME, true)
             db.dropTable(CardCategory.TABLENAME, true)
@@ -64,10 +64,12 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 4) 
                     FOREIGN_KEY("categoryId", CashCategory.TABLENAME, "id"))
             db.createTable(CardCategory.TABLENAME, true,
                     "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT + NOT_NULL,
-                    "name" to REAL)
+                    "name" to TEXT,
+                    "cost" to TEXT)
             db.createTable(CashCategory.TABLENAME, true,
                     "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT + NOT_NULL,
-                    "name" to REAL)
+                    "name" to TEXT,
+                    "cost" to TEXT)
         }
     }
 

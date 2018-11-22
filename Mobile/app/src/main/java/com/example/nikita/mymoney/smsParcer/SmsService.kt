@@ -3,6 +3,7 @@ package com.example.nikita.mymoney.smsParcer
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.example.nikita.mymoney.smsParcer.SmsReciver.Companion.SMS_BODY
 import java.util.regex.Pattern
 
 
@@ -21,7 +22,7 @@ class SmsService : Service() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val smsBody = intent.extras!!.getString("sms_body")
+        val smsBody = intent.extras!!.getString(SMS_BODY)
         parceSms(smsBody)
         return Service.START_STICKY
     }
