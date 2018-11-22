@@ -26,7 +26,7 @@ class StartActivity : AppCompatActivity() {
         manager = SimpleManager(applicationContext)
         loadAndShowData()
         card.setOnClickListener { openCardMenu() }
-        cash.setOnClickListener { }
+        cash.setOnClickListener { openCashMenu() }
     }
 
     private fun openCardMenu() {
