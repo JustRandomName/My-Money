@@ -17,15 +17,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.StartActiviti"
+            android:name=".views.StartActivity"
             android:label="@string/title_activity_start_activiti"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".views.Card"
+            android:name=".views.CardActivity"
             android:label="@string/title_activity_card"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".views.Cash"
+            android:name=".views.CashActivity"
             android:label="@string/title_activity_cash"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

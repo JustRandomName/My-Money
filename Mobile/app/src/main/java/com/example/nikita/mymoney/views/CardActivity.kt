@@ -1,18 +1,18 @@
 package com.example.nikita.mymoney.views
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
 import com.example.nikita.mymoney.R
 
-import kotlinx.android.synthetic.main.activity_cash.*
+import kotlinx.android.synthetic.main.activity_card.*
 
-class Cash : AppCompatActivity() {
+class CardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cash)
+        setContentView(R.layout.activity_card)
         setSupportActionBar(toolbar)
+
     }
 
 }
