@@ -15,6 +15,53 @@ class SmsService : Service() {
         val OPLATA = "(?<=(OPLATA)) \\d.\\d{2}"
         val PLACE = "(?<=(BYN\\s))([\\w\\s-]*)?,"
         val OSTATOK = "(?<=(BYN\\s))([\\w\\s-]*)(?=,)"
+        val DATA = "(\\d{2}\\/\\d{2}\\/\\d{2})"
+
+        fun getOSTATOK(smsBody: String): String {
+            val pattern = Pattern.compile(OSTATOK)
+            val matcher = pattern.matcher(smsBody)
+            var result = ""
+            while (matcher.find()) {
+                result += matcher.group()
+            }
+            return result
+        }
+
+        fun getPLACE(smsBody: String): String {
+            val pattern = Pattern.compile(PLACE)
+            val matcher = pattern.matcher(smsBody)
+            var result = ""
+            while (matcher.find()) {
+                result += matcher.group()
+            }
+            return result
+
+
+        }
+
+        fun getOPLATA(smsBody: String): String {
+            val pattern = Pattern.compile(OPLATA)
+            val matcher = pattern.matcher(smsBody)
+            var result = ""
+            while (matcher.find()) {
+                result += matcher.group()
+            }
+            return result
+
+
+        }
+
+        fun getDATE(smsBody: String): String {
+            val pattern = Pattern.compile(DATA)
+            val matcher = pattern.matcher(smsBody)
+            var result = ""
+            while (matcher.find()) {
+                result += matcher.group()
+            }
+            return result
+        }
+
+
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -31,41 +78,9 @@ class SmsService : Service() {
         smsDTO!!.price = getOPLATA(smsBody)
         smsDTO!!.place = getPLACE(smsBody)
         smsDTO!!.remainder = getOSTATOK(smsBody)
+        smsDTO!!.date = getDATE(smsBody)
     }
 
-    private fun getOSTATOK(smsBody: String): String {
-        val pattern = Pattern.compile(OSTATOK)
-        val matcher = pattern.matcher(smsBody)
-        var result = ""
-        while (matcher.find()) {
-            result += matcher.group()
-        }
-        return result
-    }
-
-    private fun getPLACE(smsBody: String): String {
-        val pattern = Pattern.compile(PLACE)
-        val matcher = pattern.matcher(smsBody)
-        var result = ""
-        while (matcher.find()) {
-            result += matcher.group()
-        }
-        return result
-
-
-    }
-
-    private fun getOPLATA(smsBody: String): String {
-        val pattern = Pattern.compile(OPLATA)
-        val matcher = pattern.matcher(smsBody)
-        var result = ""
-        while (matcher.find()) {
-            result += matcher.group()
-        }
-        return result
-
-
-    }
 
     private fun saveSmsData() {
         // TODO : save sms to database

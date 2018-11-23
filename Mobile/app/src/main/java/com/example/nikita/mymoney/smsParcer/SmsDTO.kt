@@ -5,4 +5,5 @@ class SmsDTO {
     var price: String = ""
     var place: String = ""
     var remainder: String = ""
+    var date: String = ""
 }
