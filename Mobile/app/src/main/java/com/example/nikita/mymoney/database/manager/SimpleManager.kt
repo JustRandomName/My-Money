@@ -6,7 +6,6 @@ import com.example.nikita.mymoney.database.model.Cash
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.parseList
 import org.jetbrains.anko.db.select
-import org.jetbrains.anko.doAsync
 import java.util.stream.Collectors
 
 open class SimpleManager {
@@ -39,7 +38,7 @@ open class SimpleManager {
                 }
         return if (r != null && r.isNotEmpty()) {
             r.stream().map {
-                it.balance
+                it.cost
             }.collect(Collectors.toList()).reduce { acc, i -> acc + i }.toString()
         } else {
             "0"

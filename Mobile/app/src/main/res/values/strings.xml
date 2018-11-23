@@ -8,4 +8,5 @@
     <string name="start_btn">Start</string>
     <string name="name">Name</string>
     <string name="cost">Cost</string>
+    <string name="addCash">addCash</string>
 </resources>
