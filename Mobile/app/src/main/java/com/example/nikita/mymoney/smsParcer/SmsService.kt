@@ -13,8 +13,8 @@ class SmsService : Service() {
 
     companion object {
         val OPLATA = "(?<=(OPLATA)) \\d.\\d{2}"
-        val PLACE = "(?<=(BYN\\s))([\\w\\s-]*)?,"
-        val OSTATOK = "(?<=(BYN\\s))([\\w\\s-]*)(?=,)"
+        val PLACE = "(?<=(BYN\\s))([\\w\\s-]*)(?=,)"
+        val OSTATOK ="((?<=(OSTATOK\\s))(\\d.\\d{2}))"
         val DATA = "(\\d{2}\\/\\d{2}\\/\\d{2})"
 
         fun getOSTATOK(smsBody: String): String {
