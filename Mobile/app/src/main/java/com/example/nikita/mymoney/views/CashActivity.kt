@@ -22,6 +22,7 @@ class CashActivity : ListActivity() {
     var listItems = ArrayList<String>()
     var adapter: ArrayAdapter<String>? = null
     private var ctn: Context? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cash)
