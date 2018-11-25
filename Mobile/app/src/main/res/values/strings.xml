@@ -9,4 +9,6 @@
     <string name="name">Name</string>
     <string name="cost">Cost</string>
     <string name="addCash">addCash</string>
+    <string name="category_name">category name</string>
+    <string name="category_cost">category cost</string>
 </resources>
