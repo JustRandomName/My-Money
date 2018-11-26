@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 class CashManager(_ctx: Context) : SimpleManager(_ctx) {
 
-    fun addNew(categoryName: Int, categoryCost: Double) {
+    /*fun addNew(categoryName: Int, categoryCost: Double) {
         database.use {
             val values = ContentValues()
             values.put("categoryId", categoryName)
@@ -15,5 +15,5 @@ class CashManager(_ctx: Context) : SimpleManager(_ctx) {
             values.put("date", LocalDateTime.now().toString())
             insert(Cash.TABLENAME, null, values)
         }
-    }
+    }*/
 }

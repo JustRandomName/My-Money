@@ -1,10 +1,20 @@
 package com.example.nikita.mymoney.database.model
 
-import java.math.BigDecimal
+import android.content.ContentValues
 
-class Balance(_balance: BigDecimal) {
+data class Balance(val balance: Double) : Model() {
+    override var tableName: String = TABLE_NAME
+
     companion object {
-        const val TABLENAME:String = "Balance"
+        var TABLE_NAME: String = "Balance"
+        val BALANCE: String = "balance"
     }
-    var balance: BigDecimal = _balance
+
+    override val dbModel: ContentValues
+        get() {
+            val values = ContentValues()
+            values.put(BALANCE, balance)
+            return values
+        }
+
 }

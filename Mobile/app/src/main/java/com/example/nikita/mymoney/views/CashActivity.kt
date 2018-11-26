@@ -8,12 +8,12 @@ import com.example.nikita.mymoney.R
 import com.example.nikita.mymoney.database.manager.CashManager
 import kotlinx.android.synthetic.main.activity_cash.*
 import android.widget.ArrayAdapter
-import com.example.nikita.mymoney.views.AddingNewDialog.Companion.showAddingDialog
+import com.example.nikita.mymoney.views.AddingDialog.Companion.showAddingDialog
 import kotlinx.android.synthetic.main.content_cash.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.AdapterView.OnItemClickListener
-import com.example.nikita.mymoney.views.AddingNewDialog.Companion.editCategory
+import com.example.nikita.mymoney.views.AddingDialog.Companion.editCategory
 
 
 class CashActivity : ListActivity() {

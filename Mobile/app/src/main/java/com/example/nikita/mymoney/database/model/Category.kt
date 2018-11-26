@@ -1,14 +1,23 @@
 package com.example.nikita.mymoney.database.model
 
-open class Category(_id: Int, _name: String) {
-    companion object {
-        const val TABLENAME: String = "Category"
-    }
+import android.content.ContentValues
 
-    var name: String = _name
-    var id: Int = _id
+data class Category(val id: Int, val name: String) : Model() {
+    override var tableName: String = TABLE_NAME
+
+    override val dbModel: ContentValues
+        get() {
+            val values = ContentValues()
+            values.put(NAME, name)
+            return values
+        }
 
     override fun toString(): String {
         return name
+    }
+
+    companion object : Id() {
+        val TABLE_NAME: String = "Category"
+        val NAME: String = "name"
     }
 }

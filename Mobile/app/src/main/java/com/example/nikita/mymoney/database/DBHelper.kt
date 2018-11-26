@@ -2,12 +2,13 @@ package com.example.nikita.mymoney.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.example.nikita.mymoney.database.model.*
+import com.example.nikita.mymoney.database.model.Balance
+import com.example.nikita.mymoney.database.model.Card
+import com.example.nikita.mymoney.database.model.Cash
+import com.example.nikita.mymoney.database.model.Category
 import org.jetbrains.anko.db.*
-import kotlin.jvm.Synchronized
-import org.jetbrains.anko.db.ManagedSQLiteOpenHelper
 
-class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 7) {
+class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 8) {
     companion object {
         private var instance: DBHelper? = null
 
@@ -21,55 +22,59 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 7) 
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.dropTable(Card.TABLENAME, true)
-        db.dropTable(Cash.TABLENAME, true)
+        db.dropTable(Card.TABLE_NAME, true)
+        db.dropTable(Cash.TABLE_NAME, true)
 
-        db.createTable(Balance.TABLENAME, true,
-                "balance" to REAL)
-        db.createTable(Card.TABLENAME, true,
-                "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
-                "categoryId" to INTEGER,
-                "cost" to REAL,
-                "date" to TEXT,
-                FOREIGN_KEY("categoryId", Category.TABLENAME, "id"))
+        db.createTable(Balance.TABLE_NAME, true,
+                Balance.BALANCE to REAL)
+        db.createTable(Card.TABLE_NAME, true,
+                Card.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                Card.CATEGORY_ID to INTEGER,
+                Card.COST to REAL,
+                Card.DATE to TEXT,
+                FOREIGN_KEY(Card.CATEGORY_ID, Category.TABLE_NAME, Category.ID))
 
-        db.createTable(Cash.TABLENAME, true,
-                "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
-                "categoryId" to INTEGER,
-                "cost" to REAL,
-                "date" to TEXT,
-                FOREIGN_KEY("categoryId", Category.TABLENAME, "id"))
+        db.createTable(Cash.TABLE_NAME, true,
+                Cash.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                Cash.CATEGORY_ID to INTEGER,
+                Cash.COST to REAL,
+                Cash.DATE to TEXT,
+                FOREIGN_KEY(Cash.CATEGORY_ID, Category.TABLE_NAME, Category.ID))
 
-        db.createTable(Category.TABLENAME, true,
-                "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT + NOT_NULL,
-                "name" to TEXT)
+        db.createTable(Category.TABLE_NAME, true,
+                Category.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                Category.NAME to TEXT)
+        db.createTable(Balance.TABLE_NAME, true,
+                Balance.BALANCE to REAL)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Here you can upgrade tables, as usual
-        if(oldVersion < 7) {
-            db.dropTable(Card.TABLENAME, true)
-            db.dropTable(Cash.TABLENAME, true)
+        if (oldVersion < 8) {
+            db.dropTable(Card.TABLE_NAME, true)
+            db.dropTable(Cash.TABLE_NAME, true)
 
-            db.createTable(Balance.TABLENAME, true,
-                    "balance" to REAL)
-            db.createTable(Card.TABLENAME, true,
-                    "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
-                    "categoryId" to INTEGER,
-                    "cost" to REAL,
-                    "date" to TEXT,
-                    FOREIGN_KEY("categoryId", Category.TABLENAME, "id"))
+            db.createTable(Balance.TABLE_NAME, true,
+                    Balance.BALANCE to REAL)
+            db.createTable(Card.TABLE_NAME, true,
+                    Card.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                    Card.CATEGORY_ID to INTEGER,
+                    Card.COST to REAL,
+                    Card.DATE to TEXT,
+                    FOREIGN_KEY(Card.CATEGORY_ID, Category.TABLE_NAME, Category.ID))
 
-            db.createTable(Cash.TABLENAME, true,
-                    "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
-                    "categoryId" to INTEGER,
-                    "cost" to REAL,
-                    "date" to TEXT,
-                    FOREIGN_KEY("categoryId", Category.TABLENAME, "id"))
+            db.createTable(Cash.TABLE_NAME, true,
+                    Cash.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                    Cash.CATEGORY_ID to INTEGER,
+                    Cash.COST to REAL,
+                    Cash.DATE to TEXT,
+                    FOREIGN_KEY(Cash.CATEGORY_ID, Category.TABLE_NAME, Category.ID))
 
-            db.createTable(Category.TABLENAME, true,
-                    "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
-                    "name" to TEXT)
+            db.createTable(Category.TABLE_NAME, true,
+                    Category.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                    Category.NAME to TEXT)
+            db.createTable(Balance.TABLE_NAME, true,
+                    Balance.BALANCE to REAL)
         }
     }
 
