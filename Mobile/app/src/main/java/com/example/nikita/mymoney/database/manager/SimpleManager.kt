@@ -1,15 +1,12 @@
 package com.example.nikita.mymoney.database.manager
 
 import android.content.Context
-import android.provider.SyncStateContract.Helpers.insert
 import com.example.nikita.mymoney.database.DBHelper
-import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.Model
 import org.jetbrains.anko.db.classParser
-import org.jetbrains.anko.db.parseList
 import org.jetbrains.anko.db.parseSingle
 import org.jetbrains.anko.db.select
-import java.util.stream.Collectors
+import org.jetbrains.anko.db.update
 
 open class SimpleManager(_ctx: Context) {
 
@@ -27,9 +24,10 @@ open class SimpleManager(_ctx: Context) {
     fun add() {}
 
     fun <T : Model> update(model: T) {
-        database.use {
+        return database.use {
             model.dbModel
-            insert(model.tableName, null, model.dbModel)
+//            update(model.tableName, model.dbModel) <- для этого переопределить метод
+            update(model.tableName, model.dbModel, "id = ?", null) // <- хуй знает работает или нет, проверить не предоставляеться возможным
         }
     }
 

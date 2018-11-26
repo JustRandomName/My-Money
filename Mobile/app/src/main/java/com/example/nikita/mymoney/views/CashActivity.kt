@@ -48,7 +48,7 @@ class CashActivity : ListActivity() {
             }
         }
         doAsync {
-            val list: List<CashDTO>? = manager.getCash().stream().map{
+            val list: List<CashDTO>? = manager.getCash().stream().map {
                 it
             }.collect(toList())
             uiThread {
