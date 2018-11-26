@@ -17,8 +17,8 @@ open class SimpleManager(_ctx: Context) {
 
     val database: DBHelper = DBHelper.getInstance(ctx!!)
 
-    fun <T : Model> addNew(model: T) {
-        database.use {
+    fun <T : Model> addNew(model: T): Long {
+        return database.use {
             model.dbModel
             insert(model.tableName, null, model.dbModel)
         }

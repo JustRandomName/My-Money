@@ -8,5 +8,6 @@ open class Id {
 open class Money : Id() {
     val CATEGORY_ID: String = "categoryId"
     val COST: String = "cost"
+    val NAME: String = "name"
     val DATE: String = "date"
 }

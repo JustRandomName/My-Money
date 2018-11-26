@@ -2,7 +2,7 @@ package com.example.nikita.mymoney.database.model
 
 import android.content.ContentValues
 
-data class Category(val id: Int, val name: String) : Model() {
+data class Category(val id: Int? = null, val name: String) : Model() {
     override var tableName: String = TABLE_NAME
 
     override val dbModel: ContentValues
@@ -17,7 +17,7 @@ data class Category(val id: Int, val name: String) : Model() {
     }
 
     companion object : Id() {
-        val TABLE_NAME: String = "Category"
+        const val TABLE_NAME: String = "Category"
         val NAME: String = "name"
     }
 }

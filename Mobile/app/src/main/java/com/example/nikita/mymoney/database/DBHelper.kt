@@ -8,7 +8,7 @@ import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.Category
 import org.jetbrains.anko.db.*
 
-class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 8) {
+class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 15) {
     companion object {
         private var instance: DBHelper? = null
 
@@ -38,6 +38,7 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 8) 
                 Cash.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                 Cash.CATEGORY_ID to INTEGER,
                 Cash.COST to REAL,
+                Cash.NAME to TEXT,
                 Cash.DATE to TEXT,
                 FOREIGN_KEY(Cash.CATEGORY_ID, Category.TABLE_NAME, Category.ID))
 
@@ -50,7 +51,7 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 8) 
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Here you can upgrade tables, as usual
-        if (oldVersion < 8) {
+        if (oldVersion < 15) {
             db.dropTable(Card.TABLE_NAME, true)
             db.dropTable(Cash.TABLE_NAME, true)
 
@@ -66,6 +67,7 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 8) 
             db.createTable(Cash.TABLE_NAME, true,
                     Cash.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
                     Cash.CATEGORY_ID to INTEGER,
+                    Cash.NAME to TEXT,
                     Cash.COST to REAL,
                     Cash.DATE to TEXT,
                     FOREIGN_KEY(Cash.CATEGORY_ID, Category.TABLE_NAME, Category.ID))
@@ -75,6 +77,10 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 8) 
                     Category.NAME to TEXT)
             db.createTable(Balance.TABLE_NAME, true,
                     Balance.BALANCE to REAL)
+            db.insert(Balance.TABLE_NAME, null, Balance(balance = 0.0).dbModel)
+            db.insert(Category.TABLE_NAME, null, Category(name = "Food").dbModel)
+            db.insert(Category.TABLE_NAME, null, Category(name = "Fuel").dbModel)
+            db.insert(Category.TABLE_NAME, null, Category(name = "Сlothes").dbModel)
         }
     }
 

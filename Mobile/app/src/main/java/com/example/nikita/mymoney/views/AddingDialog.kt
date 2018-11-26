@@ -5,9 +5,11 @@ import android.content.Context
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Spinner
 import com.example.nikita.mymoney.database.manager.CashManager
 import com.example.nikita.mymoney.database.model.Cash
-import java.time.LocalDate
+import com.example.nikita.mymoney.database.model.CashDTO
+import com.example.nikita.mymoney.database.model.Category
 
 class AddingDialog {
 
@@ -24,34 +26,11 @@ class AddingDialog {
         private const val TOP_PADDING = 5
         private const val BOTTOM_PADDING = 5
 
-        /**
-         * @param ctn - activity where call this alert
-         * @param listItems - all categories from activity
-         * @param id - id of selected category
-         * */
-        fun editCategory(ctn: Context, listItems: ArrayList<String>, id: Long) {
-            val layout = LinearLayout(ctn)
-            layout.orientation = LinearLayout.VERTICAL
-            val builder = AlertDialog.Builder(ctn)
-            val name = EditText(ctn)
-            name.hint = NAME_NINT_TEXT
-            name.setText(listItems[id.toInt()])
-            layout.addView(name)
-            val cost = EditText(ctn)
-            cost.hint = COST_NINT_TEXT
-            cost.setText(listItems[id.toInt()])
-            layout.addView(cost)
-            layout.setPadding(5, 5, 5, 5)
-            builder.setView(layout)
-            builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
-                updateListView(id, listItems, name.text.toString(), getValidCost(cost.text.toString()))
-
-                saveOrUpdateCategory(name.text.toString(), getValidCost(cost.text.toString()))
-            }
-            builder.setNegativeButton(CANCEL_BTN_LABEL) { builder, _ -> builder.cancel() }
-
-            builder.setTitle(EDIT_TEXT_TITLE)
-            builder.show()
+        private fun dropdownComponent(ctx: Context, manager: CashManager): Spinner {
+            val dropdown = Spinner(ctx)
+            val items = manager.getAllCategories()
+            dropdown.adapter = ArrayAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, items)
+            return dropdown
         }
 
         /**
@@ -60,23 +39,43 @@ class AddingDialog {
          * @param manager - manager for saveOrUpdate
          * @param adapter - ???
          * */
-        fun showAddingDialog(ctn: Context, listItems: ArrayList<String>, manager: CashManager, adapter: ArrayAdapter<String>) {
+        fun showAddingDialog(ctn: Context, listItems: ArrayList<CashDTO>, manager: CashManager,
+                             adapter: ArrayAdapter<CashDTO>, selectedId: Int = -1) {
             val layout = LinearLayout(ctn)
             layout.orientation = LinearLayout.VERTICAL
             val builder = AlertDialog.Builder(ctn)
+            var spinner = dropdownComponent(ctn, manager)
+            layout.addView(dropdownComponent(ctn, manager))
             val name = EditText(ctn)
+            if (selectedId != -1) {
+                name.setText(listItems[selectedId].name)
+            }
             name.hint = NAME_NINT_TEXT
             layout.addView(name)
+
             val cost = EditText(ctn)
+
+            if (selectedId != -1) {
+                cost.setText(listItems[selectedId].cost.toString())
+            }
             cost.hint = COST_NINT_TEXT
             layout.addView(cost)
             layout.setPadding(LEFT_PADDING, TOP_PADDING, RIGHT_PADDING, BOTTOM_PADDING)
             builder.setView(layout)
             builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
-                saveOrUpdateCategory(name.text.toString(), getValidCost(cost.text.toString()))
-                editListActivity(name.text.toString(), getValidCost(cost.text.toString()), manager, listItems, adapter)
-
+                val cashDTO: CashDTO = if (selectedId != -1) {
+                    CashDTO(id = listItems[selectedId].id, category = (spinner.selectedItem as Category), name = name.text.toString(),
+                            cost = getValidCost(cost.text.toString()))
+                } else {
+                    CashDTO(category = (spinner.selectedItem as Category), name = name.text.toString(),
+                            cost = getValidCost(cost.text.toString()))
+                }
+                editListActivity(cashDTO, manager, listItems, adapter)
+                if (selectedId != -1) {
+                    listItems[selectedId] = cashDTO
+                }
             }
+
             builder.setNegativeButton(CANCEL_BTN_LABEL) { builder, _ -> builder.cancel() }
 
             builder.setTitle(ADDING_TEXT_TITLE)
@@ -93,31 +92,30 @@ class AddingDialog {
             return realCost
         }
 
-        private fun updateListView(id: Long, listItems: ArrayList<String>, name: String, cost: Double) {
-            // TODO : need to update database and adapter
-            listItems[id.toInt()] = "will be update"
-            saveOrUpdateCategory(name, cost)
-        }
+        private fun editListActivity(cashDTO: CashDTO, manager: CashManager,
+                                     listItems: ArrayList<CashDTO>, adapter: ArrayAdapter<CashDTO>) {
 
-        private fun editListActivity(name: String, cost: Double, manager: CashManager,
-                                     listItems: ArrayList<String>, adapter: ArrayAdapter<String>) {
-            addNewCash(name.toInt(), cost, manager)
-            addItems(cost, listItems, adapter)
-        }
-
-        private fun addItems(cost: Double, listItems: ArrayList<String>, adapter: ArrayAdapter<String>) {
-            listItems.add("$cost : ${LocalDate.now()}")
+            if (addNewCash(cashDTO, manager)) {
+                addItems(cashDTO, listItems)
+            }
             adapter.notifyDataSetChanged()
         }
 
-        private fun addNewCash(categoryId: Int, cost: Double, manager: CashManager) {
-//            manager.addNew(categoryId, cost)
-        }
-
-
-        private fun saveOrUpdateCategory(name: String, cost: Double) {
+        private fun addItems(cashDTO: CashDTO, listItems: ArrayList<CashDTO>) {
+            listItems.add(CashDTO(id = cashDTO.id, cost = cashDTO.cost, name = cashDTO.name, category = cashDTO.category))
 
         }
 
+        private fun addNewCash(cashDTO: CashDTO, manager: CashManager): Boolean {
+            return if (cashDTO.id == null) {
+                cashDTO.id = manager.addNew(Cash(name = cashDTO.name, categoryId = cashDTO.category.id, cost = cashDTO.cost)).toInt()
+                true
+
+            } else {
+                manager.update(Cash(name = cashDTO.name, cost = cashDTO.cost, categoryId = cashDTO.category.id, id = cashDTO.id))
+                false
+
+            }
+        }
     }
 }

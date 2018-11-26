@@ -1,7 +1,6 @@
 package com.example.nikita.mymoney.views
 
 import android.app.ListActivity
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.example.nikita.mymoney.R
@@ -13,15 +12,18 @@ import kotlinx.android.synthetic.main.content_cash.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.AdapterView.OnItemClickListener
-import com.example.nikita.mymoney.views.AddingDialog.Companion.editCategory
+import com.example.nikita.mymoney.database.model.CashDTO
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import java.util.*
+import java.util.stream.Collectors.toList
 
 
 class CashActivity : ListActivity() {
 
     lateinit var manager: CashManager
-    var listItems = ArrayList<String>()
-    var adapter: ArrayAdapter<String>? = null
-    private var ctn: Context? = null
+    var listItems = ArrayList<CashDTO>()
+    var adapter: ArrayAdapter<CashDTO>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,19 +35,26 @@ class CashActivity : ListActivity() {
         list.adapter = adapter
 
         list.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-            editCategory(this, listItems, id)
+            showAddingDialog(this, listItems, manager, adapter!!, id.toInt())
         }
 
         list.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View,
                                         position: Int, id: Long) {
-                editCategory(ctn as CashActivity, listItems, id)
+                showAddingDialog(applicationContext, listItems, manager, adapter!!)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
             }
         }
+        doAsync {
+            val list: List<CashDTO>? = manager.getCash().stream().map{
+                it
+            }.collect(toList())
+            uiThread {
+                listItems.addAll(list!!)
+            }
+        }
         add_button.setOnClickListener { showAddingDialog(this, listItems, manager, adapter!!) }
-        ctn = this
     }
 }

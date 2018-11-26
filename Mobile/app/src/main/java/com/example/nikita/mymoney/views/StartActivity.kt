@@ -18,12 +18,13 @@ class StartActivity : AppCompatActivity() {
     val Context.database: DBHelper
         get() = DBHelper.getInstance(applicationContext)
 
-    var manager: BalanceManager = BalanceManager(applicationContext)
+    private lateinit var manager: BalanceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_activiti)
         setSupportActionBar(toolbar)
+        manager = BalanceManager(applicationContext)
         loadAndShowData()
         card.setOnClickListener { openCardMenu() }
         cash.setOnClickListener { openCashMenu() }
