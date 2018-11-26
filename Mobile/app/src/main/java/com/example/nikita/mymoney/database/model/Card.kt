@@ -3,7 +3,7 @@ package com.example.nikita.mymoney.database.model
 import android.content.ContentValues
 import java.time.LocalDate
 
-class Card(val id: Int? = null, val categoryId: Int, val cost: Double, val date: String = LocalDate.now().toString()) : Model() {
+class Card(val id: Long? = null, val categoryId: Long, val cost: Double, val date: String = LocalDate.now().toString()) : Model() {
     override var tableName: String = TABLE_NAME
 
     companion object : Money() {

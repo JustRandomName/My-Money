@@ -29,6 +29,7 @@ class CashActivity : ListActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cash)
         manager = CashManager(applicationContext)
+        listItems.addAll(manager.getCash())
         adapter = ArrayAdapter(this,
                 android.R.layout.simple_list_item_1,
                 listItems)
@@ -45,14 +46,6 @@ class CashActivity : ListActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-            }
-        }
-        doAsync {
-            val list: List<CashDTO>? = manager.getCash().stream().map {
-                it
-            }.collect(toList())
-            uiThread {
-                listItems.addAll(list!!)
             }
         }
         add_button.setOnClickListener { showAddingDialog(this, listItems, manager, adapter!!) }

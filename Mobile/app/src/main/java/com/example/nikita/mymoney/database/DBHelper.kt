@@ -8,7 +8,7 @@ import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.Category
 import org.jetbrains.anko.db.*
 
-class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 15) {
+class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 22) {
     companion object {
         private var instance: DBHelper? = null
 
@@ -51,7 +51,7 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, 15)
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Here you can upgrade tables, as usual
-        if (oldVersion < 15) {
+        if (oldVersion < 22) {
             db.dropTable(Card.TABLE_NAME, true)
             db.dropTable(Cash.TABLE_NAME, true)
 

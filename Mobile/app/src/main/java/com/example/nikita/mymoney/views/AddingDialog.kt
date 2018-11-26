@@ -19,7 +19,6 @@ class AddingDialog {
         private const val CANCEL_BTN_LABEL = "Cancel"
         private const val NAME_NINT_TEXT = "Name"
         private const val COST_NINT_TEXT = "Cost"
-        private const val EDIT_TEXT_TITLE = "Edit"
         private const val ADDING_TEXT_TITLE = "Adding"
         private const val LEFT_PADDING = 45
         private const val RIGHT_PADDING = 45
@@ -47,9 +46,6 @@ class AddingDialog {
             var spinner = dropdownComponent(ctn, manager)
             layout.addView(dropdownComponent(ctn, manager))
             val name = EditText(ctn)
-            if (selectedId != -1) {
-                name.setText(listItems[selectedId].name)
-            }
             name.hint = NAME_NINT_TEXT
             layout.addView(name)
 
@@ -57,23 +53,24 @@ class AddingDialog {
 
             if (selectedId != -1) {
                 cost.setText(listItems[selectedId].cost.toString())
+                name.setText(listItems[selectedId].name)
             }
             cost.hint = COST_NINT_TEXT
             layout.addView(cost)
             layout.setPadding(LEFT_PADDING, TOP_PADDING, RIGHT_PADDING, BOTTOM_PADDING)
             builder.setView(layout)
             builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
-                val cashDTO: CashDTO = if (selectedId != -1) {
-                    CashDTO(id = listItems[selectedId].id, category = (spinner.selectedItem as Category), name = name.text.toString(),
+                val cashDTO: CashDTO
+                if (selectedId != -1) {
+                    cashDTO = CashDTO(id = listItems[selectedId].id, category = (spinner.selectedItem as Category), name = name.text.toString(),
                             cost = getValidCost(cost.text.toString()))
+                    listItems[selectedId] = cashDTO
+
                 } else {
-                    CashDTO(category = (spinner.selectedItem as Category), name = name.text.toString(),
+                    cashDTO = CashDTO(category = (spinner.selectedItem as Category), name = name.text.toString(),
                             cost = getValidCost(cost.text.toString()))
                 }
                 editListActivity(cashDTO, manager, listItems, adapter)
-                if (selectedId != -1) {
-                    listItems[selectedId] = cashDTO
-                }
             }
 
             builder.setNegativeButton(CANCEL_BTN_LABEL) { builder, _ -> builder.cancel() }
@@ -108,7 +105,7 @@ class AddingDialog {
 
         private fun addNewCash(cashDTO: CashDTO, manager: CashManager): Boolean {
             return if (cashDTO.id == null) {
-                cashDTO.id = manager.addNew(Cash(name = cashDTO.name, categoryId = cashDTO.category.id, cost = cashDTO.cost)).toInt()
+                cashDTO.id = manager.addNew(Cash(name = cashDTO.name, categoryId = cashDTO.category.id, cost = cashDTO.cost))
                 true
 
             } else {
