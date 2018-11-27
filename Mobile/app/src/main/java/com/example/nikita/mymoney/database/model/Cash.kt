@@ -3,8 +3,8 @@ package com.example.nikita.mymoney.database.model
 import android.content.ContentValues
 import java.time.LocalDate
 
-data class Cash(val id: Long? = null, val name: String, val categoryId: Long? = null,
-                val cost: Double, val date: String = LocalDate.now().toString()) : Model() {
+data class Cash(override var id: Long? = null, val name: String, val categoryId: Long? = null,
+                val cost: Double, val date: String = LocalDate.now().toString()) : IdModel() {
     override var tableName: String = TABLE_NAME
 
     companion object : Money() {

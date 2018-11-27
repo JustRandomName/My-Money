@@ -14,9 +14,16 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="25dp"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <Spinner
+            android:id="@+id/settings"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/settings"
+            app:layout_anchorGravity="bottom|center" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -31,5 +38,7 @@
         android:text="Add"
         app:layout_anchor="@+id/include2"
         app:layout_anchorGravity="bottom|center" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

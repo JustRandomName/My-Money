@@ -2,11 +2,11 @@ package com.example.nikita.mymoney.database.manager
 
 import android.content.Context
 import com.example.nikita.mymoney.database.DBHelper
+import com.example.nikita.mymoney.database.model.IdModel
 import com.example.nikita.mymoney.database.model.Model
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.parseSingle
 import org.jetbrains.anko.db.select
-import org.jetbrains.anko.db.update
 
 open class SimpleManager(_ctx: Context) {
 
@@ -14,12 +14,26 @@ open class SimpleManager(_ctx: Context) {
 
     val database: DBHelper = DBHelper.getInstance(ctx!!)
 
-    fun <T : Model> addNew(model: T): Long {
+    fun <T : IdModel> saveOrUpdate(model: T): Long? {
+        if(model.id != null){
+            database.use {
+                update(model.tableName, model.dbModel,"id = ?", arrayOf(model.id.toString()))
+            }
+        } else {
+            return database.use {
+                model.dbModel
+                insert(model.tableName, null, model.dbModel)
+            }
+        }
+        return model.id
+    }
+
+    /*fun <T : Model> addNew(model: T): Long {
         return database.use {
             model.dbModel
             insert(model.tableName, null, model.dbModel)
         }
-    }
+    }*/
 
     fun add() {}
 

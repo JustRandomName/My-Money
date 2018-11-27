@@ -2,7 +2,7 @@ package com.example.nikita.mymoney.database.model
 
 import android.content.ContentValues
 
-data class Category(val id: Long? = null, val name: String) : Model() {
+data class Category(override var id: Long? = null, val name: String) : IdModel() {
     override var tableName: String = TABLE_NAME
 
     override val dbModel: ContentValues

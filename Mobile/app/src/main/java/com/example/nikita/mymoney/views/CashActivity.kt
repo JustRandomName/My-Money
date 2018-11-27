@@ -17,6 +17,9 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
 import java.util.stream.Collectors.toList
+import android.widget.Toast
+
+
 
 
 class CashActivity : ListActivity() {
@@ -27,6 +30,7 @@ class CashActivity : ListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_cash)
         manager = CashManager(applicationContext)
         listItems.addAll(manager.getCash())
@@ -38,7 +42,7 @@ class CashActivity : ListActivity() {
         list.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             showAddingDialog(this, listItems, manager, adapter!!, id.toInt())
         }
-
+        
         list.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View,
                                         position: Int, id: Long) {
@@ -47,6 +51,16 @@ class CashActivity : ListActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>) {
             }
+        }
+
+        settings.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>,
+                                        itemSelected: View, selectedItemPosition: Int, selectedId: Long) {
+
+                val choose = settings.selectedItem as String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
         add_button.setOnClickListener { showAddingDialog(this, listItems, manager, adapter!!) }
     }

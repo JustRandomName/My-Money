@@ -62,7 +62,7 @@ class AddingDialog {
             builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
                 val cashDTO: CashDTO
                 if (selectedId != -1) {
-                    cashDTO = CashDTO(id = listItems[selectedId].id, category = (spinner.selectedItem as Category), name = name.text.toString(),
+                    cashDTO = CashDTO(id = listItems[selectedId].id, category = spinner.selectedItem as Category, name = name.text.toString(),
                             cost = getValidCost(cost.text.toString()))
                     listItems[selectedId] = cashDTO
 
@@ -73,7 +73,7 @@ class AddingDialog {
                 editListActivity(cashDTO, manager, listItems, adapter)
             }
 
-            builder.setNegativeButton(CANCEL_BTN_LABEL) { builder, _ -> builder.cancel() }
+            builder.setNegativeButton(CANCEL_BTN_LABEL) { b, _ -> b.cancel() }
 
             builder.setTitle(ADDING_TEXT_TITLE)
             builder.show()
@@ -104,15 +104,8 @@ class AddingDialog {
         }
 
         private fun addNewCash(cashDTO: CashDTO, manager: CashManager): Boolean {
-            return if (cashDTO.id == null) {
-                cashDTO.id = manager.addNew(Cash(name = cashDTO.name, categoryId = cashDTO.category.id, cost = cashDTO.cost))
-                true
-
-            } else {
-                manager.update(Cash(name = cashDTO.name, cost = cashDTO.cost, categoryId = cashDTO.category.id, id = cashDTO.id))
-                false
-
-            }
+            cashDTO.id = manager.saveOrUpdate(Cash(id = cashDTO.id, name = cashDTO.name, categoryId = cashDTO.category.id, cost = cashDTO.cost))
+            return true
         }
     }
 }
