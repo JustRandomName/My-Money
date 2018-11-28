@@ -38,11 +38,4 @@ class CashManager(_ctx: Context) : SimpleManager(_ctx) {
     /*data class CashDTO(var id: Long? = null, val category: Category, var name: String,
                        val cost: Double, val date: String = LocalDate.now().toString()) {*/
 
-    fun getAllCategories(): List<Category> {
-        return database.use {
-            select(Category.TABLE_NAME).exec {
-                parseList(classParser())
-            }
-        }
-    }
 }

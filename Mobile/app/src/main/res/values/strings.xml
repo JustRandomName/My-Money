@@ -11,6 +11,8 @@
     <string name="addCash">addCash</string>
     <string name="category_name">category name</string>
     <string name="category_cost">category cost</string>
+    <string name="categories">Categories</string>
+    <string name="add">Add</string>
     <string-array name="settings">
         <item> </item>
         <item>Add new category</item>

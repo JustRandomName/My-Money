@@ -10,6 +10,7 @@ data class Cash(override var id: Long? = null, val name: String, val categoryId:
     companion object : Money() {
         const val TABLE_NAME: String = "Cash"
     }
+    constructor(cashDTO: CashDTO) : this(id = cashDTO.id, name = cashDTO.name, categoryId = cashDTO.category.id, cost = cashDTO.cost)
 
     override val dbModel: ContentValues
         get() {

@@ -28,6 +28,7 @@ class StartActivity : AppCompatActivity() {
         loadAndShowData()
         card.setOnClickListener { openCardMenu() }
         cash.setOnClickListener { openCashMenu() }
+        editCategories.setOnClickListener { editCategories() }
     }
 
     private fun openCardMenu() {
@@ -38,14 +39,18 @@ class StartActivity : AppCompatActivity() {
         startActivity(Intent(this@StartActivity, CashActivity::class.java))
     }
 
+    private fun editCategories() {
+        startActivity(Intent(this@StartActivity, CategoriesActivity::class.java))
+    }
+
+
     @SuppressLint("SetTextI18n")
     fun loadAndShowData() {
         doAsync {
-            var value: String? = manager.getBalance().toString()
+            val value: String? = manager.getBalance().toString()
             activityUiThread {
                 balance.text = "BALANCE : ${value.orEmpty()}"
             }
         }
     }
-
 }

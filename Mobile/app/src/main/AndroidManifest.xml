@@ -27,7 +27,8 @@
         <activity
             android:name=".views.CashActivity"
             android:label="@string/title_activity_cash"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".views.CategoriesActivity"></activity>
     </application>
 
 </manifest>

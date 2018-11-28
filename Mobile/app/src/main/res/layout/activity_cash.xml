@@ -17,14 +17,6 @@
             android:layout_height="25dp"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        <Spinner
-            android:id="@+id/settings"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:entries="@array/settings"
-            app:layout_anchorGravity="bottom|center" />
-
     </android.support.design.widget.AppBarLayout>
 
     <include
@@ -35,10 +27,7 @@
         android:id="@+id/add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text="@string/add"
         app:layout_anchor="@+id/include2"
         app:layout_anchorGravity="bottom|center" />
-
-
-
 </android.support.design.widget.CoordinatorLayout>

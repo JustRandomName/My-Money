@@ -11,7 +11,7 @@ import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.CashDTO
 import com.example.nikita.mymoney.database.model.Category
 
-class AddingDialog {
+class AddingCashDialog {
 
     companion object {
 
@@ -36,15 +36,15 @@ class AddingDialog {
          * @param ctn - activity where call this alert
          * @param listItems - all categories from current window
          * @param manager - manager for saveOrUpdate
-         * @param adapter - ???
+         * @param cashAdapter - ???
          * */
         fun showAddingDialog(ctn: Context, listItems: ArrayList<CashDTO>, manager: CashManager,
-                             adapter: ArrayAdapter<CashDTO>, selectedId: Int = -1) {
+                             cashAdapter: ArrayAdapter<CashDTO>, selectedId: Int = -1) {
             val layout = LinearLayout(ctn)
             layout.orientation = LinearLayout.VERTICAL
             val builder = AlertDialog.Builder(ctn)
-            var spinner = dropdownComponent(ctn, manager)
-            layout.addView(dropdownComponent(ctn, manager))
+            val spinner = dropdownComponent(ctn, manager)
+            layout.addView(spinner)
             val name = EditText(ctn)
             name.hint = NAME_NINT_TEXT
             layout.addView(name)
@@ -52,6 +52,7 @@ class AddingDialog {
             val cost = EditText(ctn)
 
             if (selectedId != -1) {
+                spinner.setSelection(manager.getAllCategories().indexOf(listItems[selectedId].category))
                 cost.setText(listItems[selectedId].cost.toString())
                 name.setText(listItems[selectedId].name)
             }
@@ -70,7 +71,7 @@ class AddingDialog {
                     cashDTO = CashDTO(category = (spinner.selectedItem as Category), name = name.text.toString(),
                             cost = getValidCost(cost.text.toString()))
                 }
-                editListActivity(cashDTO, manager, listItems, adapter)
+                editListActivity(cashDTO, manager, listItems, cashAdapter)
             }
 
             builder.setNegativeButton(CANCEL_BTN_LABEL) { b, _ -> b.cancel() }
@@ -99,13 +100,12 @@ class AddingDialog {
         }
 
         private fun addItems(cashDTO: CashDTO, listItems: ArrayList<CashDTO>) {
-            listItems.add(CashDTO(id = cashDTO.id, cost = cashDTO.cost, name = cashDTO.name, category = cashDTO.category))
-
+            listItems.add(cashDTO)
         }
 
         private fun addNewCash(cashDTO: CashDTO, manager: CashManager): Boolean {
-            cashDTO.id = manager.saveOrUpdate(Cash(id = cashDTO.id, name = cashDTO.name, categoryId = cashDTO.category.id, cost = cashDTO.cost))
-            return true
+            manager.saveOrUpdate(Cash(cashDTO))
+            return cashDTO.id == null
         }
     }
 }

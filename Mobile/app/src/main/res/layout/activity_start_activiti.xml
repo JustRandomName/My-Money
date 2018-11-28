@@ -53,4 +53,12 @@
         app:layout_anchor="@+id/card"
         app:layout_anchorGravity="top|center" />
 
+    <Button
+        android:id="@+id/editCategories"
+        android:layout_width="192dp"
+        android:layout_height="wrap_content"
+        android:text="@string/categories"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|center" />
+
 </android.support.design.widget.CoordinatorLayout>
