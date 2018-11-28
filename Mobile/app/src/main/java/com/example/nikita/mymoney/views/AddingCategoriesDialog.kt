@@ -1,6 +1,5 @@
 package com.example.nikita.mymoney.views
 
-import android.R
 import android.app.AlertDialog
 import android.content.Context
 import android.widget.ArrayAdapter
@@ -22,36 +21,41 @@ class AddingCategoriesDialog {
         private const val BOTTOM_PADDING = 5
 
         /**
-         * @param ctn - activity where call this alert
-         * @param listItems - all categories from current window
+         * @param ctx - activity where call this alert
          * @param manager - manager for saveOrUpdate
-         * @param cashAdapter - ???
+         * @param categoryAdapter - ???
          * */
-        fun showAddingCategoryDialog(ctn: Context, manager: CategoryManager,
-                             cashAdapter: ArrayAdapter<Category>) {
-            val layout = LinearLayout(ctn)
+        fun showAddingCategoryDialog(ctx: Context, manager: CategoryManager, listItems: ArrayList<Category>,
+                                     categoryAdapter: ArrayAdapter<Category>, selectedId: Int = -1) {
+            val layout = LinearLayout(ctx)
             layout.orientation = LinearLayout.VERTICAL
-            val builder = AlertDialog.Builder(ctn)
-            val name = EditText(ctn)
+            val builder = AlertDialog.Builder(ctx)
+            val name = EditText(ctx)
             name.hint = NAME_NINT_TEXT
+            if (selectedId != -1) {
+                name.setText(listItems[selectedId].name)
+            }
             layout.addView(name)
             layout.setPadding(LEFT_PADDING, TOP_PADDING, RIGHT_PADDING, BOTTOM_PADDING)
             builder.setView(layout)
             builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
-
+                if (selectedId == -1) {
+                    editListActivity(Category(id = null, name = name.text.toString()), manager, listItems, categoryAdapter)
+                } else {
+                    editListActivity(Category(id = listItems[selectedId].id, name = name.text.toString()), manager, listItems, categoryAdapter)
+                }
             }
-
             builder.setNegativeButton(CANCEL_BTN_LABEL) { b, _ -> b.cancel() }
 
             builder.setTitle(ADDING_TEXT_TITLE)
             builder.show()
         }
 
-        private fun editListActivity(Category: Category, manager: CategoryManager,
+        private fun editListActivity(category: Category, manager: CategoryManager,
                                      listItems: ArrayList<Category>, adapter: ArrayAdapter<Category>) {
 
-            if (addNewCash(Category, manager)) {
-                addItems(Category, listItems)
+            if (addNewCategory(category, manager)) {
+                addItems(category, listItems)
             }
             adapter.notifyDataSetChanged()
         }
@@ -60,8 +64,8 @@ class AddingCategoriesDialog {
             listItems.add(Category)
         }
 
-        private fun addNewCash(Category: Category, manager: CategoryManager): Boolean {
-            //manager.saveOrUpdate(Cash(Category))
+        private fun addNewCategory(Category: Category, manager: CategoryManager): Boolean {
+            manager.saveOrUpdate(Category)
             return Category.id == null
         }
     }

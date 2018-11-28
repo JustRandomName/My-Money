@@ -21,28 +21,26 @@ class CategoriesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_categories)
-        manager = CategoryManager(applicationContext)
-        adapter = ArrayAdapter(this,
-                android.R.layout.simple_list_item_1,
-                listItems)
 
+        manager = CategoryManager(applicationContext)
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
         listItems.addAll(manager.getAllCategories())
+
         categories_list.adapter = adapter
         categories_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-
+            showAddingCategoryDialog(applicationContext, manager, listItems, adapter!!, position)
         }
 
         categories_list.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View,
                                         position: Int, id: Long) {
-                //showAddingCategoryDialog()
+                showAddingCategoryDialog(applicationContext, manager, listItems, adapter!!, position)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
             }
         }
 
-
-//        add_button.setOnClickListener {  }
+        add.setOnClickListener { showAddingCategoryDialog(this, manager, listItems, adapter!!) }
     }
 }
