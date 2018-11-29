@@ -28,7 +28,7 @@ class CategoriesActivity : AppCompatActivity() {
 
         categories_list.adapter = adapter
         categories_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            showAddingCategoryDialog(applicationContext, manager, listItems, adapter!!, position)
+            showAddingCategoryDialog(this, manager, listItems, adapter!!, position)
         }
 
         categories_list.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

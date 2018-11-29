@@ -35,18 +35,23 @@ class AddingCategoriesDialog {
             if (selectedId != -1) {
                 name.setText(listItems[selectedId].name)
             }
+
             layout.addView(name)
             layout.setPadding(LEFT_PADDING, TOP_PADDING, RIGHT_PADDING, BOTTOM_PADDING)
             builder.setView(layout)
             builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
+                val category: Category
                 if (selectedId == -1) {
-                    editListActivity(Category(id = null, name = name.text.toString()), manager, listItems, categoryAdapter)
+                    category = Category(id = null, name = name.text.toString());
+                    editListActivity(category, manager, listItems, categoryAdapter)
                 } else {
-                    editListActivity(Category(id = listItems[selectedId].id, name = name.text.toString()), manager, listItems, categoryAdapter)
+                    category = Category(id = listItems[selectedId].id, name = name.text.toString())
+                    editListActivity(category, manager, listItems, categoryAdapter)
+                    listItems[selectedId] = category
                 }
             }
-            builder.setNegativeButton(CANCEL_BTN_LABEL) { b, _ -> b.cancel() }
 
+            builder.setNegativeButton(CANCEL_BTN_LABEL) { b, _ -> b.cancel() }
             builder.setTitle(ADDING_TEXT_TITLE)
             builder.show()
         }
@@ -64,9 +69,9 @@ class AddingCategoriesDialog {
             listItems.add(Category)
         }
 
-        private fun addNewCategory(Category: Category, manager: CategoryManager): Boolean {
-            manager.saveOrUpdate(Category)
-            return Category.id == null
+        private fun addNewCategory(entity: Category, manager: CategoryManager): Boolean {
+            manager.saveOrUpdate(entity)
+            return entity.id == null
         }
     }
 }
