@@ -1,12 +1,13 @@
 package com.example.nikita.mymoney.database.model
 
 import android.content.ContentValues
-import java.time.LocalDate
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Card(override var id: Long? = null,
            val categoryId: Long,
            val cost: Double,
-           val date: String = LocalDate.now().toString()) : IdModel() {
+           val date: String = SimpleDateFormat("yyyy/MM/dd").format(Date())) : IdModel() {
     override var tableName: String = TABLE_NAME
 
     companion object : Money() {

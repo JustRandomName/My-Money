@@ -1,8 +1,8 @@
 package com.example.nikita.mymoney.views
 
-import android.support.v7.app.AppCompatActivity
+import android.app.AlertDialog
 import android.os.Bundle
-import android.view.View
+import android.support.v7.app.AppCompatActivity
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.nikita.mymoney.R
@@ -33,15 +33,23 @@ class CategoriesActivity : AppCompatActivity() {
 
         categories_list.setOnItemLongClickListener { parent, view, position, id->
             val category = listItems[position]
-            listItems.remove(category)
-            adapter!!.notifyDataSetChanged()
             remove(category)
         }
         add.setOnClickListener { showAddingCategoryDialog(this, manager, listItems, adapter!!) }
     }
 
     private fun remove(category: Category): Boolean {
-        manager.remove(category)
+        val builder = AlertDialog.Builder(this)
+        builder.setPositiveButton("Ok") { _, _ ->
+            listItems.remove(category)
+            adapter!!.notifyDataSetChanged()
+            manager.remove(category)
+        }
+        builder.setNegativeButton("No") { _, _ ->
+
+        }
+        builder.setTitle("Remove?")
+        builder.show()
         return true
     }
 }

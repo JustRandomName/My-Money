@@ -1,20 +1,17 @@
 package com.example.nikita.mymoney.views
 
+import android.app.AlertDialog
 import android.app.ListActivity
 import android.os.Bundle
-import android.view.View
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
 import com.example.nikita.mymoney.R
 import com.example.nikita.mymoney.database.manager.CashManager
-import kotlinx.android.synthetic.main.activity_cash.*
-import android.widget.ArrayAdapter
-import com.example.nikita.mymoney.views.AddingCashDialog.Companion.showAddingDialog
-import kotlinx.android.synthetic.main.content_cash.*
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.AdapterView.OnItemClickListener
 import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.CashDTO
-import com.example.nikita.mymoney.database.model.Category
+import com.example.nikita.mymoney.views.AddingCashDialog.Companion.showAddingDialog
+import kotlinx.android.synthetic.main.activity_cash.*
+import kotlinx.android.synthetic.main.content_cash.*
 import java.util.*
 
 
@@ -39,10 +36,10 @@ class CashActivity : ListActivity() {
         }
 
         list.setOnItemLongClickListener { parent, view, position, id->
-            val category = listItems[position]
-            listItems.remove(category)
+            val cashDTO = listItems[position]
+            listItems.remove(cashDTO)
             adapter!!.notifyDataSetChanged()
-            remove(category)
+            remove(cashDTO)
         }
 
 
@@ -50,8 +47,17 @@ class CashActivity : ListActivity() {
     }
 
     private fun remove(cashDTO: CashDTO): Boolean {
-        manager.remove(Cash(cashDTO))
+        val builder = AlertDialog.Builder(this)
+        builder.setPositiveButton("Ok") { _, _ ->
+            listItems.remove(cashDTO)
+            adapter!!.notifyDataSetChanged()
+            manager.remove(Cash(cashDTO))
+        }
+        builder.setNegativeButton("No") { _, _ ->
+
+        }
+        builder.setTitle("Remove?")
+        builder.show()
         return true
     }
-
 }
