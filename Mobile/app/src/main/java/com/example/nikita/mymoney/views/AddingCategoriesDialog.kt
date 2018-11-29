@@ -70,8 +70,13 @@ class AddingCategoriesDialog {
         }
 
         private fun addNewCategory(entity: Category, manager: CategoryManager): Boolean {
-            manager.saveOrUpdate(entity)
-            return entity.id == null
+            return if (entity.id == null) {
+                manager.saveOrUpdate(entity)
+                true
+            } else {
+                manager.saveOrUpdate(entity)
+                false
+            }
         }
     }
 }

@@ -12,7 +12,9 @@ import kotlinx.android.synthetic.main.content_cash.*
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.AdapterView.OnItemClickListener
+import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.CashDTO
+import com.example.nikita.mymoney.database.model.Category
 import java.util.*
 
 
@@ -35,17 +37,21 @@ class CashActivity : ListActivity() {
         list.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             showAddingDialog(this, listItems, manager, adapter!!, id.toInt())
         }
-        
-        list.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                        position: Int, id: Long) {
-                showAddingDialog(applicationContext, listItems, manager, adapter!!)
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-            }
+        list.setOnItemLongClickListener { parent, view, position, id->
+            val category = listItems[position]
+            listItems.remove(category)
+            adapter!!.notifyDataSetChanged()
+            remove(category)
         }
+
 
         add_button.setOnClickListener { showAddingDialog(this, listItems, manager, adapter!!) }
     }
+
+    private fun remove(cashDTO: CashDTO): Boolean {
+        manager.remove(Cash(cashDTO))
+        return true
+    }
+
 }

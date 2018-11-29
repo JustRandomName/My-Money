@@ -51,4 +51,10 @@ open class SimpleManager(_ctx: Context) {
         }
     }
 
+    fun <T : IdModel> remove(model: T) {
+        database.use {
+            delete(model.tableName, "id = ?", arrayOf(model.id.toString()))
+        }
+    }
+
 }

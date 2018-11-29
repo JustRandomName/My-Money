@@ -31,16 +31,17 @@ class CategoriesActivity : AppCompatActivity() {
             showAddingCategoryDialog(this, manager, listItems, adapter!!, position)
         }
 
-        categories_list.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                        position: Int, id: Long) {
-                showAddingCategoryDialog(applicationContext, manager, listItems, adapter!!, position)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-            }
+        categories_list.setOnItemLongClickListener { parent, view, position, id->
+            val category = listItems[position]
+            listItems.remove(category)
+            adapter!!.notifyDataSetChanged()
+            remove(category)
         }
-
         add.setOnClickListener { showAddingCategoryDialog(this, manager, listItems, adapter!!) }
+    }
+
+    private fun remove(category: Category): Boolean {
+        manager.remove(category)
+        return true
     }
 }
