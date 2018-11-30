@@ -7,6 +7,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.nikita.mymoney.R
 import com.example.nikita.mymoney.database.manager.CategoryManager
+import com.example.nikita.mymoney.database.model.Cash
+import com.example.nikita.mymoney.database.model.CashDTO
 import com.example.nikita.mymoney.database.model.Category
 import com.example.nikita.mymoney.views.AddingCategoriesDialog.Companion.showAddingCategoryDialog
 import kotlinx.android.synthetic.main.activity_categories.*
@@ -24,7 +26,7 @@ class CategoriesActivity : AppCompatActivity() {
 
         manager = CategoryManager(applicationContext)
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
-        listItems.addAll(manager.getAllCategories())
+        listItems.addAll(manager.getAllCategories().filter { it.id != -1L })
 
         categories_list.adapter = adapter
         categories_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -32,6 +34,10 @@ class CategoriesActivity : AppCompatActivity() {
         }
 
         categories_list.setOnItemLongClickListener { parent, view, position, id->
+            var m = HashMap<String, Any>()
+            m.put("categoryId", listItems[position].id!!)
+
+            var cashList = manager.getByParametrs<Cash>(Cash.TABLE_NAME, m)
             val category = listItems[position]
             remove(category)
         }

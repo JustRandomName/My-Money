@@ -9,6 +9,7 @@ data class Category(override var id: Long? = null, val name: String) : IdModel()
         get() {
             val values = ContentValues()
             values.put(NAME, name)
+            values.put(ID, id)
             return values
         }
 

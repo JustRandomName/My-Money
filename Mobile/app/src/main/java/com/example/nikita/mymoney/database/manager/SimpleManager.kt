@@ -2,6 +2,7 @@ package com.example.nikita.mymoney.database.manager
 
 import android.content.Context
 import com.example.nikita.mymoney.database.DBHelper
+import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.Category
 import com.example.nikita.mymoney.database.model.IdModel
 import com.example.nikita.mymoney.database.model.Model
@@ -54,6 +55,16 @@ open class SimpleManager(_ctx: Context) {
     fun <T : IdModel> remove(model: T) {
         database.use {
             delete(model.tableName, "id = ?", arrayOf(model.id.toString()))
+        }
+    }
+
+    fun <I : IdModel> getByParametrs(tableName: String, args: HashMap<String, Any>): List<Cash> {
+        val ar: ArrayList<Pair<String , Any>> = ArrayList(args.map { it.key to it.value })
+        ar.toArray()
+        return database.use {
+            select(tableName).whereArgs(args.map { "${it.key}  = {${it.key}}," }.joinToString { it }, *ar.toTypedArray())
+        }.exec {
+            parseList(classParser())
         }
     }
 

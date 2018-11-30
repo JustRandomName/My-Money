@@ -11,7 +11,7 @@ import org.jetbrains.anko.db.*
 class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, dbVersion) {
     companion object {
         private var instance: DBHelper? = null
-        private var dbVersion:Int = 24
+        private var dbVersion: Int = 28
 
         @Synchronized
         fun getInstance(ctx: Context): DBHelper {
@@ -46,6 +46,7 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, dbV
         db.createTable(Balance.TABLE_NAME, true,
                 Balance.BALANCE to REAL)
         db.insert(Balance.TABLE_NAME, null, Balance(balance = 0.0).dbModel)
+        db.insert(Category.TABLE_NAME, null, Category(name = "Not Selected", id = -1L).dbModel)
         db.insert(Category.TABLE_NAME, null, Category(name = "Food").dbModel)
         db.insert(Category.TABLE_NAME, null, Category(name = "Fuel").dbModel)
         db.insert(Category.TABLE_NAME, null, Category(name = "Сlothes").dbModel)
@@ -61,6 +62,4 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, dbV
             onCreate(db)
         }
     }
-
-
 }
