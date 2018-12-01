@@ -2,10 +2,7 @@ package com.example.nikita.mymoney.database.manager
 
 import android.content.Context
 import com.example.nikita.mymoney.database.DBHelper
-import com.example.nikita.mymoney.database.model.Cash
-import com.example.nikita.mymoney.database.model.Category
-import com.example.nikita.mymoney.database.model.IdModel
-import com.example.nikita.mymoney.database.model.Model
+import com.example.nikita.mymoney.database.model.*
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.parseList
 import org.jetbrains.anko.db.parseSingle
@@ -18,9 +15,9 @@ open class SimpleManager(_ctx: Context) {
     val database: DBHelper = DBHelper.getInstance(ctx!!)
 
     fun <T : IdModel> saveOrUpdate(model: T): Long? {
-        if(model.id != null){
+        if (model.id != null) {
             database.use {
-                update(model.tableName, model.dbModel,"id = ?", arrayOf(model.id.toString()))
+                update(model.tableName, model.dbModel, "id = ?", arrayOf(model.id.toString()))
             }
         } else {
             return database.use {
@@ -59,8 +56,7 @@ open class SimpleManager(_ctx: Context) {
     }
 
     fun <I : IdModel> getByParametrs(tableName: String, args: HashMap<String, Any>): List<Cash> {
-        val ar: ArrayList<Pair<String , Any>> = ArrayList(args.map { it.key to it.value })
-        ar.toArray()
+        val ar: ArrayList<Pair<String, Any>> = ArrayList(args.map { it.key to it.value })
         return database.use {
             select(tableName).whereArgs(args.map { "${it.key}  = {${it.key}}," }.joinToString { it }, *ar.toTypedArray())
         }.exec {

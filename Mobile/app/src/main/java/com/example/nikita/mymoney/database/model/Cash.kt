@@ -25,7 +25,7 @@ data class Cash(override var id: Long? = null, val name: String, val categoryId:
 }
 
 
-data class CashDTO(var id: Long? = null, val category: Category, var name: String,
+data class CashDTO(var id: Long? = null, var category: Category, var name: String,
                    val cost: Double, val date: String = SimpleDateFormat("yyyy/MM/dd").format(Date())) {
     override fun toString(): String {
         return "$name ${category.name} $cost $date"

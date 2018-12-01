@@ -28,7 +28,7 @@ class Card(override var id: Long? = null,
         }
 }
 
-data class CardDTO(var id: Long? = null, val category: Category, var name: String,
+data class CardDTO(var id: Long? = null, var category: Category, var name: String,
                    val cost: Double, val date: String = SimpleDateFormat("yyyy/MM/dd").format(Date())) {
     override fun toString(): String {
         return "$name ${category.name} $cost $date"

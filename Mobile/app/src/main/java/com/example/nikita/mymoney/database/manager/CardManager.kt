@@ -28,5 +28,20 @@ class CardManager(_ctx: Context) : SimpleManager(_ctx) {
         }
     }
 
-
+    fun getCardByCategoryId(categoryId: Long): List<CardDTO> {
+        return database.use {
+            select(Card.TABLE_NAME + " left join " + Category.TABLE_NAME,
+                    "Card.id as cardId, Category.id as categoryId, Card.name as cardName, Category.name as categoryName, cost, date")
+                    .whereArgs("Card.categoryId = Category.id AND Category.Id = {categoryId}", "categoryId" to categoryId)
+                    .exec {
+                        parseList<CardCategoryJoinTable>(classParser())
+                    }
+        }.map {
+            CardDTO(id = it.cardId,
+                    name = it.cardName,
+                    category = Category(it.categoryId, it.categoryName),
+                    cost = it.cost,
+                    date = it.date)
+        }
+    }
 }

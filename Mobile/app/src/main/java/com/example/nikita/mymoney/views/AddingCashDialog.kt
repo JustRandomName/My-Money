@@ -35,7 +35,7 @@ class AddingCashDialog {
         /**
          * @param ctn - activity where call this alert
          * @param listItems - all categories from current window
-         * @param manager - manager for saveOrUpdate
+         * @param manager - categoryManager for saveOrUpdate
          * @param cashAdapter - ???
          * */
         fun showAddingDialog(ctn: Context, listItems: ArrayList<CashDTO>, manager: CashManager,
@@ -104,8 +104,9 @@ class AddingCashDialog {
         }
 
         private fun addNewCash(cashDTO: CashDTO, manager: CashManager): Boolean {
-            manager.saveOrUpdate(Cash(cashDTO))
-            return cashDTO.id == null
+            val cash = Cash(cashDTO)
+            manager.saveOrUpdate(cash)
+            return cash.id == null
         }
     }
 }

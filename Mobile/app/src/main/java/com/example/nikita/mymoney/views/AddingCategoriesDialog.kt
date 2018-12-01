@@ -22,7 +22,7 @@ class AddingCategoriesDialog {
 
         /**
          * @param ctx - activity where call this alert
-         * @param manager - manager for saveOrUpdate
+         * @param manager - categoryManager for saveOrUpdate
          * @param categoryAdapter - ???
          * */
         fun showAddingCategoryDialog(ctx: Context, manager: CategoryManager, listItems: ArrayList<Category>,
