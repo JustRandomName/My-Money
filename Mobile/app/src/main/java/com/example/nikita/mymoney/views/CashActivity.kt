@@ -32,7 +32,7 @@ class CashActivity : ListActivity() {
         list.adapter = adapter
 
         list.onItemClickListener = OnItemClickListener { parent, view, position, id ->
-            showAddingDialog(this, listItems, manager, adapter!!, id.toInt())
+            showAddingDialog(this, listItems, manager, adapter!!, position)
         }
 
         list.setOnItemLongClickListener { parent, view, position, id->
