@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nikita.mymoney">
 
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,13 +24,17 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".views.CardActivity"
-            android:label="@string/title_activity_card"
+             android:label="@string/title_activity_card"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".views.CashActivity"
             android:label="@string/title_activity_cash"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".views.CategoriesActivity"></activity>
+        <receiver android:name=".smsParcer.SmsReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"></action>
+            </intent-filter>
+        </receiver>
     </application>
-
 </manifest>

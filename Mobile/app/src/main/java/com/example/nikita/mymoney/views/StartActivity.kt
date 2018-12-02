@@ -23,7 +23,6 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_activiti)
-        setSupportActionBar(toolbar)
         manager = BalanceManager(applicationContext)
         loadAndShowData()
         card.setOnClickListener { openCardMenu() }

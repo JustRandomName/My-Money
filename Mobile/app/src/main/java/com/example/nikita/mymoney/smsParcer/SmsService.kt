@@ -3,7 +3,7 @@ package com.example.nikita.mymoney.smsParcer
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.example.nikita.mymoney.smsParcer.SmsReciver.Companion.SMS_BODY
+import com.example.nikita.mymoney.smsParcer.SmsReceiver.Companion.SMS_BODY
 import java.util.regex.Pattern
 
 

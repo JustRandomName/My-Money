@@ -8,9 +8,9 @@ import com.example.nikita.mymoney.R
 import com.example.nikita.mymoney.database.manager.CardManager
 import com.example.nikita.mymoney.database.model.Card
 import com.example.nikita.mymoney.database.model.CardDTO
-import kotlinx.android.synthetic.main.activity_card.*
 import kotlinx.android.synthetic.main.content_card.*
 import java.util.*
+
 
 class CardActivity : AppCompatActivity() {
 
@@ -21,7 +21,6 @@ class CardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card)
-        setSupportActionBar(toolbar)
         manager = CardManager(applicationContext)
         listItems.addAll(manager.getCards())
         adapter = ArrayAdapter(this,
@@ -37,19 +36,18 @@ class CardActivity : AppCompatActivity() {
         }
     }
 
-
-        private fun remove(cardDTO: CardDTO): Boolean {
-            val builder = AlertDialog.Builder(this)
-            builder.setPositiveButton("Ok") { _, _ ->
-                listItems.remove(cardDTO)
-                adapter!!.notifyDataSetChanged()
-                manager.remove(Card(cardDTO))
-            }
-            builder.setNegativeButton("No") { _, _ ->
-
-            }
-            builder.setTitle("Remove?")
-            builder.show()
-            return true
+    private fun remove(cardDTO: CardDTO): Boolean {
+        val builder = AlertDialog.Builder(this)
+        builder.setPositiveButton("Ok") { _, _ ->
+            listItems.remove(cardDTO)
+            adapter!!.notifyDataSetChanged()
+            manager.remove(Card(cardDTO))
         }
+        builder.setNegativeButton("No") { _, _ ->
+
+        }
+        builder.setTitle("Remove?")
+        builder.show()
+        return true
+    }
 }

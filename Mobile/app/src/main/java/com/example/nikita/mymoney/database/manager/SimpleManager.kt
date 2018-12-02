@@ -55,13 +55,12 @@ open class SimpleManager(_ctx: Context) {
         }
     }
 
-    fun <I : IdModel> getByParametrs(tableName: String, args: HashMap<String, Any>): List<Cash> {
-        val ar: ArrayList<Pair<String, Any>> = ArrayList(args.map { it.key to it.value })
-        return database.use {
-            select(tableName).whereArgs(args.map { "${it.key}  = {${it.key}}," }.joinToString { it }, *ar.toTypedArray())
-        }.exec {
-            parseList(classParser())
-        }
-    }
-
+//    fun <I : IdModel> getByParametrs(tableName: String, args: HashMap<String, Any>): List<Cash> {
+//        val ar: ArrayList<Pair<String, Any>> = ArrayList(args.map { it.key to it.value })
+//        return database.use {
+//            select(tableName).whereArgs(args.map { "${it.key}  = {${it.key}}," }.joinToString { it }, *ar.toTypedArray())
+//        }.exec {
+//            parseList(classParser())
+//        }
+//    }
 }

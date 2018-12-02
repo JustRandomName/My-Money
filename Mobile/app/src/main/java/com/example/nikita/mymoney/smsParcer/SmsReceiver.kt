@@ -6,10 +6,10 @@ import android.content.Intent
 import android.telephony.SmsMessage
 
 
-class SmsReciver : BroadcastReceiver() {
+class SmsReceiver: BroadcastReceiver() {
     companion object {
         val ACTION = "android.provider.Telephony.SMS_RECEIVED"
-        val BANKMANE = "MTBANK"
+        val BANKMANE = ""
         val SMS_BODY = "sms_body"
         val PDUS = "pdus"
     }

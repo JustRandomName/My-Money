@@ -44,16 +44,4 @@ class CashManager(_ctx: Context) : SimpleManager(_ctx) {
                     date = it.date)
         }
     }
-
-
-/*
-    db.select("User", "name")
-    .whereArgs("(_id > {userId}) and (name = {userName})",
-    "userName" to "John",
-    "userId" to 42)
-*/
-
-    /*data class CashDTO(var id: Long? = null, val category: Category, var name: String,
-                       val cost: Double, val date: String = LocalDate.now().toString()) {*/
-
 }
