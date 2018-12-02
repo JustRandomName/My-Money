@@ -11,7 +11,7 @@ import org.jetbrains.anko.db.*
 class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, dbVersion) {
     companion object {
         private var instance: DBHelper? = null
-        private var dbVersion: Int = 29
+        private var dbVersion: Int = 30
 
         @Synchronized
         fun getInstance(ctx: Context): DBHelper {
@@ -30,7 +30,7 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, dbV
                 Card.CATEGORY_ID to INTEGER,
                 Card.NAME to TEXT,
                 Card.COST to REAL,
-                Card.DATE to TEXT,
+                Card.DATE to INTEGER,
                 FOREIGN_KEY(Card.CATEGORY_ID, Category.TABLE_NAME, Category.ID))
 
         db.createTable(Cash.TABLE_NAME, true,
@@ -38,7 +38,7 @@ class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, dbV
                 Cash.CATEGORY_ID to INTEGER,
                 Cash.NAME to TEXT,
                 Cash.COST to REAL,
-                Cash.DATE to TEXT,
+                Cash.DATE to INTEGER,
                 FOREIGN_KEY(Cash.CATEGORY_ID, Category.TABLE_NAME, Category.ID))
 
         db.createTable(Category.TABLE_NAME, true,

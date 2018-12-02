@@ -7,7 +7,7 @@ import com.example.nikita.mymoney.smsParcer.SmsReceiver.Companion.SMS_BODY
 import java.util.regex.Pattern
 
 
-class SmsService : Service() {
+class SmsService {
 
     var smsDTO: SmsDTO? = null
 
@@ -64,25 +64,17 @@ class SmsService : Service() {
 
     }
 
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
-
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val smsBody = intent.extras!!.getString(SMS_BODY)
-        parceSms(smsBody)
-        return Service.START_STICKY
-    }
-
-    private fun parceSms(smsBody: String) {
+    fun parceSms(smsBody: String) {
         smsDTO!!.price = getOPLATA(smsBody)
         smsDTO!!.place = getPLACE(smsBody)
         smsDTO!!.remainder = getOSTATOK(smsBody)
         smsDTO!!.date = getDATE(smsBody)
+        saveSmsData()
     }
 
 
     private fun saveSmsData() {
-        // TODO : save sms to database
+        smsDTO
+        // TODO : save sms to database from smsDTO
     }
 }

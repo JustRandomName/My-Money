@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import com.example.nikita.mymoney.R
 import com.example.nikita.mymoney.database.DBHelper
 import com.example.nikita.mymoney.database.manager.BalanceManager
+import com.example.nikita.mymoney.smsParcer.SmsReceiver
 import kotlinx.android.synthetic.main.activity_start_activiti.*
 import org.jetbrains.anko.activityUiThread
 import org.jetbrains.anko.doAsync
@@ -28,6 +29,7 @@ class StartActivity : AppCompatActivity() {
         card.setOnClickListener { openCardMenu() }
         cash.setOnClickListener { openCashMenu() }
         editCategories.setOnClickListener { editCategories() }
+        balance.text = manager.getb().toString()
     }
 
     private fun openCardMenu() {
