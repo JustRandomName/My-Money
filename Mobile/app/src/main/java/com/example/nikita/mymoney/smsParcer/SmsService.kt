@@ -1,6 +1,8 @@
 package com.example.nikita.mymoney.smsParcer
 
-import com.example.nikita.mymoney.database.manager.CashManager
+import com.example.nikita.mymoney.MainActivity
+import com.example.nikita.mymoney.database.manager.CardManager
+import com.example.nikita.mymoney.database.model.Card
 import java.util.regex.Pattern
 
 
@@ -11,7 +13,7 @@ class SmsService {
     companion object {
         val OPLATA = "(?<=(OPLATA)) \\d.\\d{2}"
         val PLACE = "(?<=(BYN\\s))([\\w\\s-]*)(?=,)"
-        val OSTATOK ="((?<=(OSTATOK\\s))(\\d.\\d{2}))"
+        val OSTATOK = "((?<=(OSTATOK\\s))(\\d.\\d{2}))"
         val DATA = "(\\d{2}\\/\\d{2}\\/\\d{2})"
 
         fun getOSTATOK(smsBody: String): String {
@@ -71,7 +73,9 @@ class SmsService {
 
 
     private fun saveSmsData() {
-
+        val cardManager = CardManager(MainActivity.aplContext)
+        var a = cardManager.saveOrUpdate(Card(categoryId = -1, name = smsDTO.place, _date = "", cost = smsDTO.price.toDouble()))
+        println(a)
         // TODO : save sms to database from smsDTO
     }
 }

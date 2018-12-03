@@ -14,7 +14,7 @@ class CashManager(_ctx: Context) : SimpleManager(_ctx) {
     fun getCash(): List<CashDTO> {
         return database.use {
             select(Cash.TABLE_NAME + " left join " + Category.TABLE_NAME,
-                    "Cash.id as cashId, Category.id as categoryId, Cash.name as cashName, Category.name as categoryName, cost, date")
+                    "Cash.id as cashId, Category.id as categoryId, Cash.name as cashName, Category.name as categoryName, cost, _date")
                     .whereArgs("Cash.categoryId = Category.id")
                     .exec {
                         parseList<CashCategoryJoinTable>(classParser())
@@ -31,7 +31,7 @@ class CashManager(_ctx: Context) : SimpleManager(_ctx) {
     fun getCashByCategoryId(categoryId: Long): List<CashDTO> {
         return database.use {
             select(Cash.TABLE_NAME + " left join " + Category.TABLE_NAME,
-                    "Cash.id as cashId, Category.id as categoryId, Cash.name as cashName, Category.name as categoryName, cost, date")
+                    "Cash.id as cashId, Category.id as categoryId, Cash.name as cashName, Category.name as categoryName, cost, _date")
                     .whereArgs("Cash.categoryId = Category.id AND Category.Id = {categoryId}", "categoryId" to categoryId)
                     .exec {
                         parseList<CashCategoryJoinTable>(classParser())

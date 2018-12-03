@@ -1,11 +1,14 @@
 package com.example.nikita.mymoney.database.model
 
 import android.content.ContentValues
+import java.text.SimpleDateFormat
 import java.util.*
 
-data class Cash(override var id: Long? = null, val name: String, val categoryId: Long? = null,
-                val cost: Double, val date: Long = Date().time) : IdModel() {
-
+data class Cash(override var id: Long? = null,
+                val name: String,
+                val categoryId: Long? = null,
+                val cost: Double,
+                val date: String = SimpleDateFormat("yyyy-MM-dd").format(Date())) : IdModel() {
     override var tableName: String = TABLE_NAME
 
     companion object : Money() {
@@ -26,17 +29,12 @@ data class Cash(override var id: Long? = null, val name: String, val categoryId:
 
 
 data class CashDTO(var id: Long? = null, var category: Category, var name: String,
-                   val cost: Double, val date: Long = Date().time) {
+                   val cost: Double, val date: String = SimpleDateFormat("yyyy-MM-dd").format(Date())) {
     override fun toString(): String {
         return "$name ${category.name} $cost $date"
     }
 }
 
 
-data class CashCategoryJoinTable(val cashId: Long,
-                                 val categoryId: Long,
-                                 val cashName: String,
-                                 val categoryName: String,
-                                 val cost: Double,
-                                 val date: Long)
+data class CashCategoryJoinTable(val cashId: Long, val categoryId: Long, val cashName: String, val categoryName: String, val cost: Double, val date: String)
 

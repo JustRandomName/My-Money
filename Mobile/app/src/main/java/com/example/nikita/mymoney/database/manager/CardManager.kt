@@ -14,7 +14,7 @@ class CardManager(_ctx: Context) : SimpleManager(_ctx) {
     fun getCards(): List<CardDTO> {
         return database.use {
             select(Card.TABLE_NAME + " left join " + Category.TABLE_NAME,
-                    "Card.id as cardhId, Category.id as categoryId, Card.name as cardName, Category.name as categoryName, cost, date")
+                    "Card.id as cardhId, Category.id as categoryId, Card.name as cardName, Category.name as categoryName, cost, _date")
                     .whereArgs("Card.categoryId = Category.id")
                     .exec {
                         parseList<CardCategoryJoinTable>(classParser())
@@ -24,14 +24,14 @@ class CardManager(_ctx: Context) : SimpleManager(_ctx) {
                     name = it.cardName,
                     category = Category(it.categoryId, it.categoryName),
                     cost = it.cost,
-                    date = it.date)
+                    _date = it._date)
         }
     }
 
     fun getCardByCategoryId(categoryId: Long): List<CardDTO> {
         return database.use {
             select(Card.TABLE_NAME + " left join " + Category.TABLE_NAME,
-                    "Card.id as cardId, Category.id as categoryId, Card.name as cardName, Category.name as categoryName, cost, date")
+                    "Card.id as cardId, Category.id as categoryId, Card.name as cardName, Category.name as categoryName, cost, _date")
                     .whereArgs("Card.categoryId = Category.id AND Category.Id = {categoryId}", "categoryId" to categoryId)
                     .exec {
                         parseList<CardCategoryJoinTable>(classParser())
@@ -41,7 +41,7 @@ class CardManager(_ctx: Context) : SimpleManager(_ctx) {
                     name = it.cardName,
                     category = Category(it.categoryId, it.categoryName),
                     cost = it.cost,
-                    date = it.date)
+                    _date = it._date)
         }
     }
 }
