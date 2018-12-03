@@ -10,6 +10,7 @@ import org.jetbrains.anko.doAsync
 class SmsReceiver : BroadcastReceiver() {
     companion object {
         val ACTION = "android.provider.Telephony.SMS_RECEIVED"
+        // insert here bank name number
         val BANKMANE = "+375298479550"
         val SMS_BODY = "sms_body"
         val PDUS = "pdus"
@@ -30,13 +31,7 @@ class SmsReceiver : BroadcastReceiver() {
                     bodyText.append(messages[i]!!.messageBody)
                 }
                 val body = bodyText.toString()
-                parseSMS(body)
-//                val mIntent = Intent(context, SmsService::class.java)
-//                mIntent.putExtra(SMS_BODY, body)
-//                context.startService(mIntent)
-//
-
-
+                parseSMS(String(bodyText))
                 abortBroadcast()
             }
 
@@ -45,10 +40,9 @@ class SmsReceiver : BroadcastReceiver() {
 
 
     private fun parseSMS(smsBody : String) {
-        doAsync {
+        Thread {
             val smsServ = SmsService()
             smsServ.parceSms(smsBody)
-        }
-        abortBroadcast()
+        }.start()
     }
 }

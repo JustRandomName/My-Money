@@ -1,15 +1,12 @@
 package com.example.nikita.mymoney.smsParcer
 
-import android.app.Service
-import android.content.Intent
-import android.os.IBinder
-import com.example.nikita.mymoney.smsParcer.SmsReceiver.Companion.SMS_BODY
+import com.example.nikita.mymoney.database.manager.CashManager
 import java.util.regex.Pattern
 
 
 class SmsService {
 
-    var smsDTO: SmsDTO? = null
+    var smsDTO = SmsDTO()
 
     companion object {
         val OPLATA = "(?<=(OPLATA)) \\d.\\d{2}"
@@ -65,16 +62,16 @@ class SmsService {
     }
 
     fun parceSms(smsBody: String) {
-        smsDTO!!.price = getOPLATA(smsBody)
-        smsDTO!!.place = getPLACE(smsBody)
-        smsDTO!!.remainder = getOSTATOK(smsBody)
-        smsDTO!!.date = getDATE(smsBody)
+        smsDTO.price = getOPLATA(smsBody)
+        smsDTO.place = getPLACE(smsBody)
+        smsDTO.remainder = getOSTATOK(smsBody)
+        smsDTO.date = getDATE(smsBody)
         saveSmsData()
     }
 
 
     private fun saveSmsData() {
-        smsDTO
+
         // TODO : save sms to database from smsDTO
     }
 }
