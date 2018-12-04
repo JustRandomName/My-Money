@@ -9,7 +9,10 @@ import com.example.nikita.mymoney.R
 import com.example.nikita.mymoney.database.manager.CardManager
 import com.example.nikita.mymoney.database.model.Card
 import com.example.nikita.mymoney.database.model.CardDTO
-import com.example.nikita.mymoney.views.EditCard.Companion.showEditDialog
+import com.example.nikita.mymoney.views.Constants.Companion.CANCEL_BTN_LABEL
+import com.example.nikita.mymoney.views.Constants.Companion.OK_BTN_LABEL
+import com.example.nikita.mymoney.views.Constants.Companion.REMOVE_LABEL
+import com.example.nikita.mymoney.views.EditCardDialog.Companion.showEditDialog
 import kotlinx.android.synthetic.main.content_card.*
 import java.util.*
 
@@ -43,15 +46,15 @@ class CardActivity : AppCompatActivity() {
 
     private fun remove(cardDTO: CardDTO): Boolean {
         val builder = AlertDialog.Builder(this)
-        builder.setPositiveButton("Ok") { _, _ ->
+        builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
             listItems.remove(cardDTO)
             adapter!!.notifyDataSetChanged()
             manager.remove(Card(cardDTO))
         }
-        builder.setNegativeButton("No") { _, _ ->
+        builder.setNegativeButton(CANCEL_BTN_LABEL) { _, _ ->
 
         }
-        builder.setTitle("Remove?")
+        builder.setTitle(REMOVE_LABEL)
         builder.show()
         return true
     }

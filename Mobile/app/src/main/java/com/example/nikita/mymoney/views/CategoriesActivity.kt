@@ -9,10 +9,13 @@ import com.example.nikita.mymoney.R
 import com.example.nikita.mymoney.database.manager.CardManager
 import com.example.nikita.mymoney.database.manager.CashManager
 import com.example.nikita.mymoney.database.manager.CategoryManager
-import com.example.nikita.mymoney.database.model.Card
-import com.example.nikita.mymoney.database.model.Cash
-import com.example.nikita.mymoney.database.model.Category
+import com.example.nikita.mymoney.database.model.*
 import com.example.nikita.mymoney.views.AddingCategoriesDialog.Companion.showAddingCategoryDialog
+import com.example.nikita.mymoney.views.Constants.Companion.CANCEL_BTN_LABEL
+import com.example.nikita.mymoney.views.Constants.Companion.DEFAULT_SELECTED_ITEM_ID
+import com.example.nikita.mymoney.views.Constants.Companion.NOT_SELECTED
+import com.example.nikita.mymoney.views.Constants.Companion.OK_BTN_LABEL
+import com.example.nikita.mymoney.views.Constants.Companion.REMOVE_LABEL
 import kotlinx.android.synthetic.main.activity_categories.*
 
 class CategoriesActivity : AppCompatActivity() {
@@ -32,7 +35,7 @@ class CategoriesActivity : AppCompatActivity() {
         cashManager = CashManager(applicationContext)
         cardManager = CardManager(applicationContext)
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
-        listItems.addAll(categoryManager.getAllCategories().filter { it.id != -1L })
+        listItems.addAll(categoryManager.getAllCategories().filter { it.id != DEFAULT_SELECTED_ITEM_ID.toLong() })
 
         categories_list.adapter = adapter
         categories_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -40,20 +43,6 @@ class CategoriesActivity : AppCompatActivity() {
         }
 
         categories_list.setOnItemLongClickListener { parent, view, position, id->
-            var cashList = cashManager.getCashByCategoryId((listItems[position].id!!)).filter { it.category.id ==  listItems[position].id!! }
-            cashList.map {
-                it.category = Category(-1L, "Not Selected")
-            }
-            cashList.map { cashManager.saveOrUpdate(Cash(it)) }
-
-
-            var cardList = cardManager.getCardByCategoryId((listItems[position].id!!)).filter { it.category.id ==  listItems[position].id!! }
-            cardList.map {
-                it.category = Category(-1L, "Not Selected")
-            }
-            cardList.map { cardManager.saveOrUpdate(Card(it)) }
-
-
             val category = listItems[position]
             remove(category)
         }
@@ -63,16 +52,39 @@ class CategoriesActivity : AppCompatActivity() {
 
     private fun remove(category: Category): Boolean {
         val builder = AlertDialog.Builder(this)
-        builder.setPositiveButton("Ok") { _, _ ->
+        builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
+            setDefaultCategory(category)
             listItems.remove(category)
             adapter!!.notifyDataSetChanged()
             categoryManager.remove(category)
         }
-        builder.setNegativeButton("No") { _, _ ->
+        builder.setNegativeButton(CANCEL_BTN_LABEL) { _, _ ->
 
         }
-        builder.setTitle("Remove?")
+        builder.setTitle(REMOVE_LABEL)
         builder.show()
         return true
+    }
+
+    private fun setDefaultCategory(category: Category) {
+        val cashList = getCashByCategory(category)
+        cashList.map {
+            it.category = Category(DEFAULT_SELECTED_ITEM_ID.toLong(), NOT_SELECTED)
+        }
+        cashList.map { cashManager.saveOrUpdate(Cash(it)) }
+
+        val cardList = getCardByCategory(category)
+        cardList.map {
+            it.category = Category(DEFAULT_SELECTED_ITEM_ID.toLong(), NOT_SELECTED)
+        }
+        cardList.map { cardManager.saveOrUpdate(Card(it)) }
+    }
+
+    private fun getCashByCategory(category: Category): List<CashDTO> {
+        return cashManager.getCashByCategoryId((category.id!!)).filter { it.category.id ==  category.id }
+    }
+
+    private fun getCardByCategory(category: Category): List<CardDTO> {
+        return cardManager.getCardByCategoryId((category.id!!)).filter { it.category.id ==  category.id }
     }
 }

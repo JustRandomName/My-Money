@@ -5,33 +5,25 @@ import android.content.Context
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Spinner
 import com.example.nikita.mymoney.database.manager.CashManager
 import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.CashDTO
 import com.example.nikita.mymoney.database.model.Category
+import com.example.nikita.mymoney.views.Constants.Companion.ADDING_TEXT_TITLE
+import com.example.nikita.mymoney.views.Constants.Companion.BOTTOM_PADDING
+import com.example.nikita.mymoney.views.Constants.Companion.CANCEL_BTN_LABEL
+import com.example.nikita.mymoney.views.Constants.Companion.COST_NINT_TEXT
+import com.example.nikita.mymoney.views.Constants.Companion.DEFAULT_SELECTED_ITEM_ID
+import com.example.nikita.mymoney.views.Constants.Companion.LEFT_PADDING
+import com.example.nikita.mymoney.views.Constants.Companion.NAME_NINT_TEXT
+import com.example.nikita.mymoney.views.Constants.Companion.OK_BTN_LABEL
+import com.example.nikita.mymoney.views.Constants.Companion.RIGHT_PADDING
+import com.example.nikita.mymoney.views.Constants.Companion.TOP_PADDING
+import com.example.nikita.mymoney.views.Constants.Companion.dropdownComponent
 
 class AddingCashDialog {
 
     companion object {
-
-        private const val OK_BTN_LABEL = "OK"
-        private const val CANCEL_BTN_LABEL = "Cancel"
-        private const val NAME_NINT_TEXT = "Name"
-        private const val COST_NINT_TEXT = "Cost"
-        private const val ADDING_TEXT_TITLE = "Adding"
-        private const val LEFT_PADDING = 45
-        private const val RIGHT_PADDING = 45
-        private const val TOP_PADDING = 5
-        private const val BOTTOM_PADDING = 5
-
-        private fun dropdownComponent(ctx: Context, manager: CashManager): Spinner {
-            val dropdown = Spinner(ctx)
-            val items = manager.getAllCategories()
-            dropdown.adapter = ArrayAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, items)
-            return dropdown
-        }
-
         /**
          * @param ctn - activity where call this alert
          * @param listItems - all categories from current window
@@ -39,7 +31,7 @@ class AddingCashDialog {
          * @param cashAdapter - ???
          * */
         fun showAddingDialog(ctn: Context, listItems: ArrayList<CashDTO>, manager: CashManager,
-                             cashAdapter: ArrayAdapter<CashDTO>, selectedId: Int = -1) {
+                             cashAdapter: ArrayAdapter<CashDTO>, selectedId: Int = DEFAULT_SELECTED_ITEM_ID) {
             val layout = LinearLayout(ctn)
             layout.orientation = LinearLayout.VERTICAL
             val builder = AlertDialog.Builder(ctn)
@@ -51,7 +43,7 @@ class AddingCashDialog {
 
             val cost = EditText(ctn)
 
-            if (selectedId != -1) {
+            if (selectedId != DEFAULT_SELECTED_ITEM_ID) {
                 spinner.setSelection(manager.getAllCategories().indexOf(listItems[selectedId].category))
                 cost.setText(listItems[selectedId].cost.toString())
                 name.setText(listItems[selectedId].name)
@@ -62,7 +54,7 @@ class AddingCashDialog {
             builder.setView(layout)
             builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
                 val cashDTO: CashDTO
-                if (selectedId != -1) {
+                if (selectedId != DEFAULT_SELECTED_ITEM_ID) {
                     cashDTO = CashDTO(id = listItems[selectedId].id, category = spinner.selectedItem as Category, name = name.text.toString(),
                             cost = getValidCost(cost.text.toString()))
                     listItems[selectedId] = cashDTO

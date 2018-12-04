@@ -7,18 +7,19 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import com.example.nikita.mymoney.database.manager.CategoryManager
 import com.example.nikita.mymoney.database.model.Category
+import com.example.nikita.mymoney.views.Constants.Companion.ADDING_TEXT_TITLE
+import com.example.nikita.mymoney.views.Constants.Companion.BOTTOM_PADDING
+import com.example.nikita.mymoney.views.Constants.Companion.CANCEL_BTN_LABEL
+import com.example.nikita.mymoney.views.Constants.Companion.DEFAULT_SELECTED_ITEM_ID
+import com.example.nikita.mymoney.views.Constants.Companion.LEFT_PADDING
+import com.example.nikita.mymoney.views.Constants.Companion.NAME_NINT_TEXT
+import com.example.nikita.mymoney.views.Constants.Companion.OK_BTN_LABEL
+import com.example.nikita.mymoney.views.Constants.Companion.RIGHT_PADDING
+import com.example.nikita.mymoney.views.Constants.Companion.TOP_PADDING
+
 
 class AddingCategoriesDialog {
     companion object {
-
-        private const val OK_BTN_LABEL = "OK"
-        private const val CANCEL_BTN_LABEL = "Cancel"
-        private const val NAME_NINT_TEXT = "Name"
-        private const val ADDING_TEXT_TITLE = "Adding"
-        private const val LEFT_PADDING = 45
-        private const val RIGHT_PADDING = 45
-        private const val TOP_PADDING = 5
-        private const val BOTTOM_PADDING = 5
 
         /**
          * @param ctx - activity where call this alert
@@ -26,13 +27,13 @@ class AddingCategoriesDialog {
          * @param categoryAdapter - ???
          * */
         fun showAddingCategoryDialog(ctx: Context, manager: CategoryManager, listItems: ArrayList<Category>,
-                                     categoryAdapter: ArrayAdapter<Category>, selectedId: Int = -1) {
+                                     categoryAdapter: ArrayAdapter<Category>, selectedId: Int = DEFAULT_SELECTED_ITEM_ID) {
             val layout = LinearLayout(ctx)
             layout.orientation = LinearLayout.VERTICAL
             val builder = AlertDialog.Builder(ctx)
             val name = EditText(ctx)
             name.hint = NAME_NINT_TEXT
-            if (selectedId != -1) {
+            if (selectedId != DEFAULT_SELECTED_ITEM_ID) {
                 name.setText(listItems[selectedId].name)
             }
 
@@ -41,7 +42,7 @@ class AddingCategoriesDialog {
             builder.setView(layout)
             builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
                 val category: Category
-                if (selectedId == -1) {
+                if (selectedId == DEFAULT_SELECTED_ITEM_ID) {
                     category = Category(id = null, name = name.text.toString());
                     editListActivity(category, manager, listItems, categoryAdapter)
                 } else {
@@ -60,13 +61,9 @@ class AddingCategoriesDialog {
                                      listItems: ArrayList<Category>, adapter: ArrayAdapter<Category>) {
 
             if (addNewCategory(category, manager)) {
-                addItems(category, listItems)
+                listItems.add(category)
             }
             adapter.notifyDataSetChanged()
-        }
-
-        private fun addItems(Category: Category, listItems: ArrayList<Category>) {
-            listItems.add(Category)
         }
 
         private fun addNewCategory(entity: Category, manager: CategoryManager): Boolean {

@@ -10,6 +10,9 @@ import com.example.nikita.mymoney.database.manager.CashManager
 import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.CashDTO
 import com.example.nikita.mymoney.views.AddingCashDialog.Companion.showAddingDialog
+import com.example.nikita.mymoney.views.Constants.Companion.CANCEL_BTN_LABEL
+import com.example.nikita.mymoney.views.Constants.Companion.OK_BTN_LABEL
+import com.example.nikita.mymoney.views.Constants.Companion.REMOVE_LABEL
 import kotlinx.android.synthetic.main.activity_cash.*
 import kotlinx.android.synthetic.main.content_cash.*
 import java.util.*
@@ -46,15 +49,15 @@ class CashActivity : ListActivity() {
 
     private fun remove(cashDTO: CashDTO): Boolean {
         val builder = AlertDialog.Builder(this)
-        builder.setPositiveButton("Ok") { _, _ ->
+        builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
             listItems.remove(cashDTO)
             adapter!!.notifyDataSetChanged()
             manager.remove(Cash(cashDTO))
         }
-        builder.setNegativeButton("No") { _, _ ->
+        builder.setNegativeButton(CANCEL_BTN_LABEL) { _, _ ->
 
         }
-        builder.setTitle("Remove?")
+        builder.setTitle(REMOVE_LABEL)
         builder.show()
         return true
     }
