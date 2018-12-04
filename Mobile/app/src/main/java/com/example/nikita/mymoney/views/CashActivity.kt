@@ -37,8 +37,6 @@ class CashActivity : ListActivity() {
 
         list.setOnItemLongClickListener { parent, view, position, id->
             val cashDTO = listItems[position]
-            listItems.remove(cashDTO)
-            adapter!!.notifyDataSetChanged()
             remove(cashDTO)
         }
 

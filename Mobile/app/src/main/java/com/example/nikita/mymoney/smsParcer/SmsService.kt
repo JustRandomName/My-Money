@@ -3,6 +3,8 @@ package com.example.nikita.mymoney.smsParcer
 import com.example.nikita.mymoney.MainActivity
 import com.example.nikita.mymoney.database.manager.CardManager
 import com.example.nikita.mymoney.database.model.Card
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Pattern
 
 
@@ -74,7 +76,9 @@ class SmsService {
 
     private fun saveSmsData() {
         val cardManager = CardManager(MainActivity.aplContext)
-        var a = cardManager.saveOrUpdate(Card(categoryId = -1, name = smsDTO.place, _date = "", cost = smsDTO.price.toDouble()))
+        var a = cardManager.saveOrUpdate(Card(categoryId = -1, name = smsDTO.place,
+                _date = SimpleDateFormat("yyyy-MM-dd").format(SimpleDateFormat("dd/MM/yy").parse(smsDTO.date)),
+                cost = smsDTO.price.toDouble()))
         println(a)
         // TODO : save sms to database from smsDTO
     }

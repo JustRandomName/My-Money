@@ -3,11 +3,13 @@ package com.example.nikita.mymoney.views
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import com.example.nikita.mymoney.R
 import com.example.nikita.mymoney.database.manager.CardManager
 import com.example.nikita.mymoney.database.model.Card
 import com.example.nikita.mymoney.database.model.CardDTO
+import com.example.nikita.mymoney.views.EditCard.Companion.showEditDialog
 import kotlinx.android.synthetic.main.content_card.*
 import java.util.*
 
@@ -28,10 +30,13 @@ class CardActivity : AppCompatActivity() {
                 listItems)
         categories_card_list.adapter = adapter
 
+        categories_card_list.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+            showEditDialog(this, listItems, manager, adapter!!, position)
+        }
+
+
         categories_card_list.setOnItemLongClickListener { parent, view, position, id ->
             val cashDTO = listItems[position]
-            listItems.remove(cashDTO)
-            adapter!!.notifyDataSetChanged()
             remove(cashDTO)
         }
     }
