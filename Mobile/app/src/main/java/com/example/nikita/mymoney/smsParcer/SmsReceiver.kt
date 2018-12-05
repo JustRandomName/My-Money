@@ -4,18 +4,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.telephony.SmsMessage
-import org.jetbrains.anko.doAsync
+import com.example.nikita.mymoney.service.PropertyService.Companion.getBankNumberFromProperty
+import com.example.nikita.mymoney.service.SmsService
+import com.example.nikita.mymoney.Constants.Companion.ACTION
+import com.example.nikita.mymoney.Constants.Companion.PDUS
 
 
 class SmsReceiver : BroadcastReceiver() {
-    companion object {
-        val ACTION = "android.provider.Telephony.SMS_RECEIVED"
-        // insert here bank name number
-        val BANKMANE = "+375298479550"
-        val SMS_BODY = "sms_body"
-        val PDUS = "pdus"
-    }
-
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != null &&
                 ACTION.compareTo(intent.action, false) == 0) {
@@ -25,7 +20,7 @@ class SmsReceiver : BroadcastReceiver() {
                 messages[i] = SmsMessage.createFromPdu(pduArray[i] as ByteArray)
             }
             val sms_from = messages[0]!!.getDisplayOriginatingAddress()
-            if (sms_from.equals(BANKMANE, ignoreCase = true)) {
+            if (sms_from.equals(getBankNumberFromProperty(context), ignoreCase = true)) {
                 val bodyText = StringBuilder()
                 for (i in 0 until messages.size) {
                     bodyText.append(messages[i]!!.messageBody)

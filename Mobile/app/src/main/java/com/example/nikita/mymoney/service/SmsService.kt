@@ -1,10 +1,10 @@
-package com.example.nikita.mymoney.smsParcer
+package com.example.nikita.mymoney.service
 
 import com.example.nikita.mymoney.MainActivity
 import com.example.nikita.mymoney.database.manager.CardManager
 import com.example.nikita.mymoney.database.model.Card
+import com.example.nikita.mymoney.smsParcer.SmsDTO
 import java.text.SimpleDateFormat
-import java.util.*
 import java.util.regex.Pattern
 
 

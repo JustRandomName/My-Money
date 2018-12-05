@@ -9,17 +9,17 @@ import com.example.nikita.mymoney.database.manager.CashManager
 import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.CashDTO
 import com.example.nikita.mymoney.database.model.Category
-import com.example.nikita.mymoney.views.Constants.Companion.ADDING_TEXT_TITLE
-import com.example.nikita.mymoney.views.Constants.Companion.BOTTOM_PADDING
-import com.example.nikita.mymoney.views.Constants.Companion.CANCEL_BTN_LABEL
-import com.example.nikita.mymoney.views.Constants.Companion.COST_NINT_TEXT
-import com.example.nikita.mymoney.views.Constants.Companion.DEFAULT_SELECTED_ITEM_ID
-import com.example.nikita.mymoney.views.Constants.Companion.LEFT_PADDING
-import com.example.nikita.mymoney.views.Constants.Companion.NAME_NINT_TEXT
-import com.example.nikita.mymoney.views.Constants.Companion.OK_BTN_LABEL
-import com.example.nikita.mymoney.views.Constants.Companion.RIGHT_PADDING
-import com.example.nikita.mymoney.views.Constants.Companion.TOP_PADDING
-import com.example.nikita.mymoney.views.Constants.Companion.dropdownComponent
+import com.example.nikita.mymoney.Constants.Companion.ADDING_TEXT_TITLE
+import com.example.nikita.mymoney.Constants.Companion.BOTTOM_PADDING
+import com.example.nikita.mymoney.Constants.Companion.CANCEL_BTN_LABEL
+import com.example.nikita.mymoney.Constants.Companion.COST_NINT_TEXT
+import com.example.nikita.mymoney.Constants.Companion.DEFAULT_SELECTED_ITEM_ID
+import com.example.nikita.mymoney.Constants.Companion.LEFT_PADDING
+import com.example.nikita.mymoney.Constants.Companion.NAME_NINT_TEXT
+import com.example.nikita.mymoney.Constants.Companion.OK_BTN_LABEL
+import com.example.nikita.mymoney.Constants.Companion.RIGHT_PADDING
+import com.example.nikita.mymoney.Constants.Companion.TOP_PADDING
+import com.example.nikita.mymoney.Constants.Companion.dropdownComponent
 
 class AddingCashDialog {
 

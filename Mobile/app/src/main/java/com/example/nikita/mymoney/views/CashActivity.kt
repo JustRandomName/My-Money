@@ -10,9 +10,9 @@ import com.example.nikita.mymoney.database.manager.CashManager
 import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.CashDTO
 import com.example.nikita.mymoney.views.AddingCashDialog.Companion.showAddingDialog
-import com.example.nikita.mymoney.views.Constants.Companion.CANCEL_BTN_LABEL
-import com.example.nikita.mymoney.views.Constants.Companion.OK_BTN_LABEL
-import com.example.nikita.mymoney.views.Constants.Companion.REMOVE_LABEL
+import com.example.nikita.mymoney.Constants.Companion.CANCEL_BTN_LABEL
+import com.example.nikita.mymoney.Constants.Companion.OK_BTN_LABEL
+import com.example.nikita.mymoney.Constants.Companion.REMOVE_LABEL
 import kotlinx.android.synthetic.main.activity_cash.*
 import kotlinx.android.synthetic.main.content_cash.*
 import java.util.*

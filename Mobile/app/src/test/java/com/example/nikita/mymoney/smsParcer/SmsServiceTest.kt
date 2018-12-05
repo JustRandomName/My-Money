@@ -1,5 +1,6 @@
 package com.example.nikita.mymoney.smsParcer
 
+import com.example.nikita.mymoney.service.SmsService
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -16,22 +17,22 @@ class SmsServiceTest {
 
     @Test
     fun parseDATE_test() {
-        assertEquals("22/11/18" ,SmsService.getDATE(smsBody))
+        assertEquals("22/11/18" , SmsService.getDATE(smsBody))
     }
 
     @Test
     fun parseOPLATA_test() {
-        assertEquals(" 2.64" ,SmsService.getOPLATA(smsBody))
+        assertEquals(" 2.64" , SmsService.getOPLATA(smsBody))
     }
 
     @Test
     fun parsePLACE_test() {
-        assertEquals("TO 5-GO UCHEBNOGO KORP" ,SmsService.getPLACE(smsBody))
+        assertEquals("TO 5-GO UCHEBNOGO KORP" , SmsService.getPLACE(smsBody))
     }
 
     @Test
     fun parseOSTATOC_test() {
-        assertEquals("4.64" ,SmsService.getOSTATOK(smsBody))
+        assertEquals("4.64" , SmsService.getOSTATOK(smsBody))
     }
 
 }

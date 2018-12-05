@@ -19,6 +19,16 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_card" />
+    <include
+        android:id="@+id/include3"
+        layout="@layout/content_card" />
+
+    <Button
+        android:id="@+id/editCard"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_card"
+        app:layout_anchor="@+id/include3"
+        app:layout_anchorGravity="bottom|center" />
 
 </android.support.design.widget.CoordinatorLayout>

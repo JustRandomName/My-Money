@@ -1,4 +1,4 @@
-package com.example.nikita.mymoney.views
+package com.example.nikita.mymoney
 
 import android.R
 import android.content.Context
@@ -16,6 +16,10 @@ class Constants {
         const val EDIT_LABEL = "Edit"
         const val REMOVE_LABEL = "Remove?"
         const val NOT_SELECTED = "Not selected"
+        const val BANK_CARD_NUMBER = "Bank number"
+        const val BANK_CARD_NUMBER_PROPERTY = "bankNumber"
+        const val ACTION = "android.provider.Telephony.SMS_RECEIVED"
+        const val PDUS = "pdus"
         const val LEFT_PADDING = 45
         const val RIGHT_PADDING = 45
         const val TOP_PADDING = 5

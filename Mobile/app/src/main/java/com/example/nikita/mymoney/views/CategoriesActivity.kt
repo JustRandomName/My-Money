@@ -11,11 +11,11 @@ import com.example.nikita.mymoney.database.manager.CashManager
 import com.example.nikita.mymoney.database.manager.CategoryManager
 import com.example.nikita.mymoney.database.model.*
 import com.example.nikita.mymoney.views.AddingCategoriesDialog.Companion.showAddingCategoryDialog
-import com.example.nikita.mymoney.views.Constants.Companion.CANCEL_BTN_LABEL
-import com.example.nikita.mymoney.views.Constants.Companion.DEFAULT_SELECTED_ITEM_ID
-import com.example.nikita.mymoney.views.Constants.Companion.NOT_SELECTED
-import com.example.nikita.mymoney.views.Constants.Companion.OK_BTN_LABEL
-import com.example.nikita.mymoney.views.Constants.Companion.REMOVE_LABEL
+import com.example.nikita.mymoney.Constants.Companion.CANCEL_BTN_LABEL
+import com.example.nikita.mymoney.Constants.Companion.DEFAULT_SELECTED_ITEM_ID
+import com.example.nikita.mymoney.Constants.Companion.NOT_SELECTED
+import com.example.nikita.mymoney.Constants.Companion.OK_BTN_LABEL
+import com.example.nikita.mymoney.Constants.Companion.REMOVE_LABEL
 import kotlinx.android.synthetic.main.activity_categories.*
 
 class CategoriesActivity : AppCompatActivity() {

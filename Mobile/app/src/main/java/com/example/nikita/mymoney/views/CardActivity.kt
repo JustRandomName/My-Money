@@ -9,10 +9,12 @@ import com.example.nikita.mymoney.R
 import com.example.nikita.mymoney.database.manager.CardManager
 import com.example.nikita.mymoney.database.model.Card
 import com.example.nikita.mymoney.database.model.CardDTO
-import com.example.nikita.mymoney.views.Constants.Companion.CANCEL_BTN_LABEL
-import com.example.nikita.mymoney.views.Constants.Companion.OK_BTN_LABEL
-import com.example.nikita.mymoney.views.Constants.Companion.REMOVE_LABEL
+import com.example.nikita.mymoney.Constants.Companion.CANCEL_BTN_LABEL
+import com.example.nikita.mymoney.Constants.Companion.OK_BTN_LABEL
+import com.example.nikita.mymoney.Constants.Companion.REMOVE_LABEL
+import com.example.nikita.mymoney.views.EditCardDialog.Companion.showEditCardDialog
 import com.example.nikita.mymoney.views.EditCardDialog.Companion.showEditDialog
+import kotlinx.android.synthetic.main.activity_card.*
 import kotlinx.android.synthetic.main.content_card.*
 import java.util.*
 
@@ -36,12 +38,12 @@ class CardActivity : AppCompatActivity() {
         categories_card_list.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             showEditDialog(this, listItems, manager, adapter!!, position)
         }
-
-
         categories_card_list.setOnItemLongClickListener { parent, view, position, id ->
             val cashDTO = listItems[position]
             remove(cashDTO)
         }
+
+        editCard.setOnClickListener { showEditCardDialog(this) }
     }
 
     private fun remove(cardDTO: CardDTO): Boolean {
