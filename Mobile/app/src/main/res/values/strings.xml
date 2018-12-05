@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">MyMoney</string>
+    <string name="title_activity_start_activiti">StartActiviti</string>
+    <string name="card">Card</string>
+    <string name="cash">cash</string>
+    <string name="title_activity_card">Card</string>
+    <string name="title_activity_cash">Cash</string>
+    <string name="start_btn">Start</string>
+    <string name="name">Name</string>
+    <string name="cost">Cost</string>
+    <string name="addCash">addCash</string>
+    <string name="category_name">category name</string>
+    <string name="category_cost">category cost</string>
+    <string name="categories">Categories</string>
+    <string name="add">Add</string>
+    <string-array name="settings">
+        <item> </item>
+        <item>Add new category</item>
+    </string-array>
 </resources>

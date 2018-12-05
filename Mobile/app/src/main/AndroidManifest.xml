@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nikita.mymoney" >
+    package="com.example.nikita.mymoney">
+
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
 
     <application
         android:allowBackup="true"
@@ -8,14 +10,31 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".views.StartActivity"
+            android:label="@string/title_activity_start_activiti"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.CardActivity"
+             android:label="@string/title_activity_card"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.CashActivity"
+            android:label="@string/title_activity_cash"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".views.CategoriesActivity"></activity>
+        <receiver android:name=".smsParcer.SmsReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"></action>
+            </intent-filter>
+        </receiver>
     </application>
-
 </manifest>
