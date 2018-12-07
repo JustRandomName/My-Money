@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import com.example.nikita.mymoney.database.manager.CardManager
 import com.example.nikita.mymoney.database.model.Card
 import com.example.nikita.mymoney.database.model.CardDTO
-import com.example.nikita.mymoney.database.model.Category
 import com.example.nikita.mymoney.service.PropertyService
 import com.example.nikita.mymoney.Constants.Companion.BANK_CARD_NUMBER
 import com.example.nikita.mymoney.Constants.Companion.BOTTOM_PADDING
@@ -22,6 +21,8 @@ import com.example.nikita.mymoney.Constants.Companion.OK_BTN_LABEL
 import com.example.nikita.mymoney.Constants.Companion.RIGHT_PADDING
 import com.example.nikita.mymoney.Constants.Companion.TOP_PADDING
 import com.example.nikita.mymoney.Constants.Companion.dropdownComponent
+import com.example.nikita.mymoney.database.model.Category
+import com.example.nikita.mymoney.database.model.CategoryDTO
 import java.util.*
 
 
@@ -43,7 +44,7 @@ class EditCardDialog {
             val cost = EditText(ctn)
 
             if (selectedId != DEFAULT_SELECTED_ITEM_ID) {
-                spinner.setSelection(manager.getAllCategories().indexOf(listItems[selectedId].category))
+                spinner.setSelection(manager.getAllCategories().map { CategoryDTO(it.id, it.name) }.indexOf(listItems[selectedId].category))
                 cost.setText(listItems[selectedId].cost.toString())
                 name.setText(listItems[selectedId].name)
             }
@@ -52,7 +53,8 @@ class EditCardDialog {
             layout.setPadding(LEFT_PADDING, TOP_PADDING, RIGHT_PADDING, BOTTOM_PADDING)
             builder.setView(layout)
             builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
-                val cardDTO = CardDTO(id = listItems[selectedId].id, category = (spinner.selectedItem as Category), name = name.text.toString(),
+                val cat = spinner.selectedItem as Category
+                val cardDTO = CardDTO(id = listItems[selectedId].id, category = CategoryDTO(cat.id, cat.name), name = name.text.toString(),
                         cost = cost.text.toString().toDouble())
                 listItems[selectedId] = cardDTO
                 editListActivity(cardDTO, manager, cardAdapter)

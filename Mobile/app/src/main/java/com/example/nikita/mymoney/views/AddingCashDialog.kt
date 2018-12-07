@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import com.example.nikita.mymoney.database.manager.CashManager
 import com.example.nikita.mymoney.database.model.Cash
 import com.example.nikita.mymoney.database.model.CashDTO
-import com.example.nikita.mymoney.database.model.Category
 import com.example.nikita.mymoney.Constants.Companion.ADDING_TEXT_TITLE
 import com.example.nikita.mymoney.Constants.Companion.BOTTOM_PADDING
 import com.example.nikita.mymoney.Constants.Companion.CANCEL_BTN_LABEL
@@ -20,6 +19,8 @@ import com.example.nikita.mymoney.Constants.Companion.OK_BTN_LABEL
 import com.example.nikita.mymoney.Constants.Companion.RIGHT_PADDING
 import com.example.nikita.mymoney.Constants.Companion.TOP_PADDING
 import com.example.nikita.mymoney.Constants.Companion.dropdownComponent
+import com.example.nikita.mymoney.database.model.Category
+import com.example.nikita.mymoney.database.model.CategoryDTO
 
 class AddingCashDialog {
 
@@ -44,7 +45,7 @@ class AddingCashDialog {
             val cost = EditText(ctn)
 
             if (selectedId != DEFAULT_SELECTED_ITEM_ID) {
-                spinner.setSelection(manager.getAllCategories().indexOf(listItems[selectedId].category))
+                spinner.setSelection(manager.getAllCategories().map {CategoryDTO(it.id, it.name)}.indexOf(listItems[selectedId].category))
                 cost.setText(listItems[selectedId].cost.toString())
                 name.setText(listItems[selectedId].name)
             }
@@ -54,13 +55,14 @@ class AddingCashDialog {
             builder.setView(layout)
             builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
                 val cashDTO: CashDTO
+                var cat = spinner.selectedItem as Category
                 if (selectedId != DEFAULT_SELECTED_ITEM_ID) {
-                    cashDTO = CashDTO(id = listItems[selectedId].id, category = spinner.selectedItem as Category, name = name.text.toString(),
+                    cashDTO = CashDTO(id = listItems[selectedId].id, category = CategoryDTO(cat.id, cat.name), name = name.text.toString(),
                             cost = getValidCost(cost.text.toString()))
                     listItems[selectedId] = cashDTO
 
                 } else {
-                    cashDTO = CashDTO(category = (spinner.selectedItem as Category), name = name.text.toString(),
+                    cashDTO = CashDTO(category = CategoryDTO(cat.id, cat.name), name = name.text.toString(),
                             cost = getValidCost(cost.text.toString()))
                 }
                 editListActivity(cashDTO, manager, listItems, cashAdapter)

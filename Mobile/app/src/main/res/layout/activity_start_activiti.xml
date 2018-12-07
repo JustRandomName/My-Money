@@ -49,8 +49,8 @@
     <TextView
         android:id="@+id/balance"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@+id/card"
+        android:layout_height="32dp"
+        app:layout_anchor="@+id/include"
         app:layout_anchorGravity="top|center" />
 
     <Button

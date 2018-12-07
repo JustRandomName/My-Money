@@ -16,6 +16,7 @@ import com.example.nikita.mymoney.Constants.Companion.NAME_NINT_TEXT
 import com.example.nikita.mymoney.Constants.Companion.OK_BTN_LABEL
 import com.example.nikita.mymoney.Constants.Companion.RIGHT_PADDING
 import com.example.nikita.mymoney.Constants.Companion.TOP_PADDING
+import com.example.nikita.mymoney.database.model.CategoryDTO
 
 
 class AddingCategoriesDialog {
@@ -26,8 +27,8 @@ class AddingCategoriesDialog {
          * @param manager - categoryManager for saveOrUpdate
          * @param categoryAdapter - ???
          * */
-        fun showAddingCategoryDialog(ctx: Context, manager: CategoryManager, listItems: ArrayList<Category>,
-                                     categoryAdapter: ArrayAdapter<Category>, selectedId: Int = DEFAULT_SELECTED_ITEM_ID) {
+        fun showAddingCategoryDialog(ctx: Context, manager: CategoryManager, listItems: ArrayList<CategoryDTO>,
+                                     categoryAdapter: ArrayAdapter<CategoryDTO>, selectedId: Int = DEFAULT_SELECTED_ITEM_ID) {
             val layout = LinearLayout(ctx)
             layout.orientation = LinearLayout.VERTICAL
             val builder = AlertDialog.Builder(ctx)
@@ -41,12 +42,12 @@ class AddingCategoriesDialog {
             layout.setPadding(LEFT_PADDING, TOP_PADDING, RIGHT_PADDING, BOTTOM_PADDING)
             builder.setView(layout)
             builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
-                val category: Category
+                val category: CategoryDTO
                 if (selectedId == DEFAULT_SELECTED_ITEM_ID) {
-                    category = Category(id = null, name = name.text.toString());
+                    category = CategoryDTO(catId = null, name = name.text.toString())
                     editListActivity(category, manager, listItems, categoryAdapter)
                 } else {
-                    category = Category(id = listItems[selectedId].id, name = name.text.toString())
+                    category = CategoryDTO(catId = listItems[selectedId].catId, name = name.text.toString())
                     editListActivity(category, manager, listItems, categoryAdapter)
                     listItems[selectedId] = category
                 }
@@ -57,10 +58,10 @@ class AddingCategoriesDialog {
             builder.show()
         }
 
-        private fun editListActivity(category: Category, manager: CategoryManager,
-                                     listItems: ArrayList<Category>, adapter: ArrayAdapter<Category>) {
+        private fun editListActivity(category: CategoryDTO, manager: CategoryManager,
+                                     listItems: ArrayList<CategoryDTO>, adapter: ArrayAdapter<CategoryDTO>) {
 
-            if (addNewCategory(category, manager)) {
+            if (addNewCategory(category.entity, manager)) {
                 listItems.add(category)
             }
             adapter.notifyDataSetChanged()

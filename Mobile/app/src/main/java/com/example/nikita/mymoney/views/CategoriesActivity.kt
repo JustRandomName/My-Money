@@ -23,8 +23,8 @@ class CategoriesActivity : AppCompatActivity() {
     lateinit var categoryManager: CategoryManager
     lateinit var cardManager: CardManager
     lateinit var cashManager: CashManager
-    var listItems = ArrayList<Category>()
-    var adapter: ArrayAdapter<Category>? = null
+    var listItems = ArrayList<CategoryDTO>()
+    var adapter: ArrayAdapter<CategoryDTO>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class CategoriesActivity : AppCompatActivity() {
         cashManager = CashManager(applicationContext)
         cardManager = CardManager(applicationContext)
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
-        listItems.addAll(categoryManager.getAllCategories().filter { it.id != DEFAULT_SELECTED_ITEM_ID.toLong() })
+        listItems.addAll(categoryManager.getAllCategoriesDTOs().filter { it.catId != DEFAULT_SELECTED_ITEM_ID.toLong() })
 
         categories_list.adapter = adapter
         categories_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -50,13 +50,13 @@ class CategoriesActivity : AppCompatActivity() {
         add.setOnClickListener { showAddingCategoryDialog(this, categoryManager, listItems, adapter!!) }
     }
 
-    private fun remove(category: Category): Boolean {
+    private fun remove(category: CategoryDTO): Boolean {
         val builder = AlertDialog.Builder(this)
         builder.setPositiveButton(OK_BTN_LABEL) { _, _ ->
-            setDefaultCategory(category)
+            setDefaultCategory(category.entity)
             listItems.remove(category)
             adapter!!.notifyDataSetChanged()
-            categoryManager.remove(category)
+            categoryManager.remove(category.entity)
         }
         builder.setNegativeButton(CANCEL_BTN_LABEL) { _, _ ->
 
@@ -69,22 +69,22 @@ class CategoriesActivity : AppCompatActivity() {
     private fun setDefaultCategory(category: Category) {
         val cashList = getCashByCategory(category)
         cashList.map {
-            it.category = Category(DEFAULT_SELECTED_ITEM_ID.toLong(), NOT_SELECTED)
+            it.category = CategoryDTO(DEFAULT_SELECTED_ITEM_ID.toLong(), NOT_SELECTED)
         }
         cashList.map { cashManager.saveOrUpdate(Cash(it)) }
 
         val cardList = getCardByCategory(category)
         cardList.map {
-            it.category = Category(DEFAULT_SELECTED_ITEM_ID.toLong(), NOT_SELECTED)
+            it.category = CategoryDTO(DEFAULT_SELECTED_ITEM_ID.toLong(), NOT_SELECTED)
         }
         cardList.map { cardManager.saveOrUpdate(Card(it)) }
     }
 
     private fun getCashByCategory(category: Category): List<CashDTO> {
-        return cashManager.getCashByCategoryId((category.id!!)).filter { it.category.id ==  category.id }
+        return cashManager.getCashByCategoryId((category.id!!)).filter { it.category.catId ==  category.id }
     }
 
     private fun getCardByCategory(category: Category): List<CardDTO> {
-        return cardManager.getCardByCategoryId((category.id!!)).filter { it.category.id ==  category.id }
+        return cardManager.getCardByCategoryId((category.id!!)).filter { it.category.catId ==  category.id }
     }
 }

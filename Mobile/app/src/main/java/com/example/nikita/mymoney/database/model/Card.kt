@@ -13,7 +13,7 @@ class Card(override var id: Long? = null,
 
     constructor(cardDTO: CardDTO) : this(id = cardDTO.id,
             name = cardDTO.name,
-            categoryId = cardDTO.category.id!!,
+            categoryId = cardDTO.category.catId!!,
             cost = cardDTO.cost)
 
     companion object : Money() {
@@ -31,7 +31,7 @@ class Card(override var id: Long? = null,
         }
 }
 
-data class CardDTO(var id: Long? = null, var category: Category, var name: String,
+data class CardDTO(var id: Long? = null, var category: CategoryDTO, var name: String,
                    val cost: Double, val _date: String = SimpleDateFormat("yyyy-MM-dd").format(Date())) {
     override fun toString(): String {
         return "$name ${category.name} $cost $_date"

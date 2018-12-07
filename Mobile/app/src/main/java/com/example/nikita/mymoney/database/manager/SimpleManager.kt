@@ -49,6 +49,47 @@ open class SimpleManager(_ctx: Context) {
         }
     }
 
+
+    fun getAllCategoriesDTOs(): List<CategoryDTO> {
+        val cash: List<CategoryDTO> = database.use {
+            select(Category.TABLE_NAME + " LEFT OUTER JOIN " + Cash.TABLE_NAME,
+                    "Category.id as catId, Category.name as name, cost")
+                    .whereArgs("Cash.categoryId = Category.id")
+                    .groupBy("Category.id")
+                    .exec {
+                        parseList(classParser())
+                    }
+        }
+
+
+        val card: List<CategoryDTO> = database.use {
+            select(Category.TABLE_NAME + " LEFT OUTER JOIN " + Card.TABLE_NAME,
+                    "Category.id as catId, Category.name as name, cost")
+                    .whereArgs("Card.categoryId = Category.id")
+                    .groupBy("Category.id")
+                    .exec {
+                        parseList(classParser())
+                    }
+        }
+
+        val k = getAllCategories().map { x ->
+            CategoryDTO(catId = x.id, name = x.name, cost = cash.filter {
+                it.catId == x.id
+            }.map {
+                it.cost
+            }.fold(0.0) { acc, s -> acc + s!! })
+        }
+        k.forEach { y ->
+            y.cost = y.cost!! + card.filter {
+                it.catId == y.catId
+            }.map {
+                it.cost
+            }.fold(0.0) { acc, s -> acc + s!! }
+        }
+        return k
+    }
+
+
     fun <T : IdModel> remove(model: T) {
         database.use {
             delete(model.tableName, "id = ?", arrayOf(model.id.toString()))

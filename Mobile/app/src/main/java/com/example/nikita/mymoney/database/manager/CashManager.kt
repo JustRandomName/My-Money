@@ -1,10 +1,7 @@
 package com.example.nikita.mymoney.database.manager
 
 import android.content.Context
-import com.example.nikita.mymoney.database.model.Cash
-import com.example.nikita.mymoney.database.model.CashCategoryJoinTable
-import com.example.nikita.mymoney.database.model.CashDTO
-import com.example.nikita.mymoney.database.model.Category
+import com.example.nikita.mymoney.database.model.*
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.parseList
 import org.jetbrains.anko.db.select
@@ -22,7 +19,7 @@ class CashManager(_ctx: Context) : SimpleManager(_ctx) {
         }.map {
             CashDTO(id = it.cashId,
                     name = it.cashName,
-                    category = Category(it.categoryId, it.categoryName),
+                    category = CategoryDTO(it.categoryId, it.categoryName),
                     cost = it.cost,
                     date = it.date)
         }
@@ -39,7 +36,7 @@ class CashManager(_ctx: Context) : SimpleManager(_ctx) {
         }.map {
             CashDTO(id = it.cashId,
                     name = it.cashName,
-                    category = Category(it.categoryId, it.categoryName),
+                    category = CategoryDTO(it.categoryId, it.categoryName),
                     cost = it.cost,
                     date = it.date)
         }

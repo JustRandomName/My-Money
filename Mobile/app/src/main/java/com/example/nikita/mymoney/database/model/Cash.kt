@@ -14,7 +14,7 @@ data class Cash(override var id: Long? = null,
     companion object : Money() {
         const val TABLE_NAME: String = "Cash"
     }
-    constructor(cashDTO: CashDTO) : this(id = cashDTO.id, name = cashDTO.name, categoryId = cashDTO.category.id, cost = cashDTO.cost)
+    constructor(cashDTO: CashDTO) : this(id = cashDTO.id, name = cashDTO.name, categoryId = cashDTO.category.catId, cost = cashDTO.cost)
 
     override val dbModel: ContentValues
         get() {
@@ -28,7 +28,7 @@ data class Cash(override var id: Long? = null,
 }
 
 
-data class CashDTO(var id: Long? = null, var category: Category, var name: String,
+data class CashDTO(var id: Long? = null, var category: CategoryDTO, var name: String,
                    val cost: Double, val date: String = SimpleDateFormat("yyyy-MM-dd").format(Date())) {
     override fun toString(): String {
         return "$name ${category.name} $cost $date"

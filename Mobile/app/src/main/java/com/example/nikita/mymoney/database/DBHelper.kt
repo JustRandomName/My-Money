@@ -11,7 +11,7 @@ import org.jetbrains.anko.db.*
 class DBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyMoney", null, dbVersion) {
     companion object {
         private var instance: DBHelper? = null
-        private var dbVersion: Int = 33
+        private var dbVersion: Int = 34
 
         @Synchronized
         fun getInstance(ctx: Context): DBHelper {
