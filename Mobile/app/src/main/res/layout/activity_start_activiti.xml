@@ -11,13 +11,6 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
     </android.support.design.widget.AppBarLayout>
 
     <include
@@ -48,10 +41,9 @@
 
     <TextView
         android:id="@+id/balance"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="top|center" />
+        android:layout_width="386dp"
+        android:layout_height="92dp"
+        app:layout_anchor="@+id/include" />
 
     <Button
         android:id="@+id/editCategories"
